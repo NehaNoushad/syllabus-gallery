@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KTU ECE — Semester Category Breakdown</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f5f4f0; color: #1a1a18; padding: 20px; }
+  h1 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { font-size: 12px; color: #666; margin-bottom: 16px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+  .leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #555; }
+  .ldot { width: 10px; height: 10px; border-radius: 2px; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+
+  .card { background: #fff; border-radius: 10px; border: 1px solid #e0dfd8; overflow: hidden; }
+  .card-head { font-size: 12px; font-weight: 600; padding: 8px 12px; background: #f0efe8; border-bottom: 1px solid #e0dfd8; display: flex; justify-content: space-between; }
+  .card-head span { font-weight: 400; color: #777; }
+
+  .bar { display: flex; height: 22px; }
+  .seg { height: 100%; }
+
+  .rows { padding: 8px 12px 10px; display: flex; flex-direction: column; gap: 4px; }
+  .row { display: flex; align-items: flex-start; gap: 7px; font-size: 11px; line-height: 1.4; }
+  .dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; margin-top: 2px; }
+
+  /* category colors */
+  .math  { background: #7F77DD; }
+  .sci   { background: #1D9E75; }
+  .esc   { background: #378ADD; }
+  .core  { background: #D85A30; }
+  .cs    { background: #BA7517; }
+  .hmc   { background: #888780; }
+  .lab   { background: #D4537E; }
+  .proj  { background: #639922; }
+  .elec  { background: #993556; }
+  .mnc   { background: #d0cfc8; }
+
+  .summary { background: #fff; border-radius: 10px; border: 1px solid #e0dfd8; overflow: hidden; margin-top: 14px; }
+  .sum-head { font-size: 12px; font-weight: 600; padding: 8px 12px; background: #f0efe8; border-bottom: 1px solid #e0dfd8; display: flex; justify-content: space-between; }
+  .sum-head span { font-weight: 400; color: #777; }
+  .sum-labels { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px; font-size: 11px; color: #555; }
+</style>
+</head>
+<body>
+<h1>KTU B.Tech ECE — Subject Category per Semester</h1>
+<p class="subtitle">Electronics and Computer Engineering · 2019 Scheme · 162 credits</p>
+
+<div class="legend">
+  <div class="leg"><div class="ldot math"></div>Mathematics</div>
+  <div class="leg"><div class="ldot sci"></div>Basic Science</div>
+  <div class="leg"><div class="ldot esc"></div>Engg. Science</div>
+  <div class="leg"><div class="ldot core"></div>ECE Core</div>
+  <div class="leg"><div class="ldot cs"></div>CS / Software</div>
+  <div class="leg"><div class="ldot hmc"></div>Humanities</div>
+  <div class="leg"><div class="ldot lab"></div>Lab / Workshop</div>
+  <div class="leg"><div class="ldot proj"></div>Project / Seminar</div>
+  <div class="leg"><div class="ldot elec"></div>Elective</div>
+  <div class="leg"><div class="ldot mnc"></div>Non-credit</div>
+</div>
+
+<div class="grid">
+
+  <!-- S1 -->
+  <div class="card">
+    <div class="card-head">Semester 1 <span>17 credits</span></div>
+    <div class="bar">
+      <div class="seg math"  style="width:23.5%" title="Maths 4cr"></div>
+      <div class="seg sci"   style="width:23.5%" title="Science 4cr"></div>
+      <div class="seg esc"   style="width:41.2%" title="Engg. Science 7cr"></div>
+      <div class="seg lab"   style="width:11.8%" title="Labs 2cr"></div>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="dot math"></div>Linear Algebra and Calculus (4cr)</div>
+      <div class="row"><div class="dot sci"></div>Engineering Physics / Chemistry (4cr)</div>
+      <div class="row"><div class="dot esc"></div>Engineering Mechanics / Graphics (3cr)</div>
+      <div class="row"><div class="dot esc"></div>Basics of Civil &amp; Mech. / Elec. &amp; Electronics (4cr)</div>
+      <div class="row"><div class="dot lab"></div>Physics / Chemistry Lab (1cr)</div>
+      <div class="row"><div class="dot lab"></div>Civil &amp; Mech. / Elec. Workshop (1cr)</div>
+      <div class="row"><div class="dot mnc"></div>Life Skills (non-credit)</div>
+    </div>
+  </div>
+
+  <!-- S2 -->
+  <div class="card">
+    <div class="card-head">Semester 2 <span>21 credits</span></div>
+    <div class="bar">
+      <div class="seg math" style="width:19%"   title="Maths 4cr"></div>
+      <div class="seg sci"  style="width:19%"   title="Science 4cr"></div>
+      <div class="seg esc"  style="width:33.3%" title="Engg. Science 7cr"></div>
+      <div class="seg cs"   style="width:19%"   title="CS/Programming 4cr"></div>
+      <div class="seg lab"  style="width:9.5%"  title="Labs 2cr"></div>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="dot math"></div>Vector Calculus, DEs and Transforms (4cr)</div>
+      <div class="row"><div class="dot sci"></div>Engineering Physics A / Chemistry (4cr)</div>
+      <div class="row"><div class="dot esc"></div>Engineering Mechanics / Graphics (3cr)</div>
+      <div class="row"><div class="dot esc"></div>Basics of Civil &amp; Mech. / Elec. &amp; Electronics (4cr)</div>
+      <div class="row"><div class="dot cs"></div>Programming in C (4cr)</div>
+      <div class="row"><div class="dot lab"></div>Physics / Chemistry Lab (1cr)</div>
+      <div class="row"><div class="dot lab"></div>Civil &amp; Mech. / Elec. Workshop (1cr)</div>
+      <div class="row"><div class="dot mnc"></div>Professional Communication (non-credit)</div>
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <div class="card">
+    <div class="card-head">Semester 3 <span>22 credits</span></div>
+    <div class="bar">
+      <div class="seg math" style="width:18.2%" title="Maths 4cr"></div>
+      <div class="seg core" style="width:36.3%" title="ECE Core 8cr"></div>
+      <div class="seg cs"   style="width:18.2%" title="CS 4cr"></div>
+      <div class="seg esc"  style="width:9.1%"  title="Engg. Science 2cr"></div>
+      <div class="seg lab"  style="width:18.2%" title="Labs 4cr"></div>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="dot math"></div>Discrete Mathematical Structures (4cr)</div>
+      <div class="row"><div class="dot core"></div>Digital Systems and VLSI Design (4cr)</div>
+      <div class="row"><div class="dot core"></div>Electronic Devices and Circuits (4cr)</div>
+      <div class="row"><div class="dot cs"></div>Data Structures (4cr)</div>
+      <div class="row"><div class="dot esc"></div>Design &amp; Engineering / Professional Ethics (2cr)</div>
+      <div class="row"><div class="dot lab"></div>Data Structures Lab (2cr)</div>
+      <div class="row"><div class="dot lab"></div>Digital Systems &amp; VLSI Lab (2cr)</div>
+      <div class="row"><div class="dot mnc"></div>Sustainable Engineering (non-credit)</div>
+    </div>
+  </div>
+
+  <!-- S4 -->
+  <div class="card">
+    <div class="card-head">Semester 4 <span>22 credits</span></div>
+    <div class="bar">
+      <div class="seg math" style="width:18.2%" title="Maths 4cr"></div>
+      <div class="seg cs"   style="width:36.3%" title="CS/Software 8cr"></div>
+      <div class="seg core" style="width:18.2%" title="ECE Core 4cr"></div>
+      <div class="seg esc"  style="width:9.1%"  title="Engg. Science 2cr"></div>
+      <div class="seg lab"  style="width:18.2%" title="Labs 4cr"></div>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="dot math"></div>Probability, Random Process and Numerical Methods (4cr)</div>
+      <div class="row"><div class="dot cs"></div>Computer Organization and Architecture (4cr)</div>
+      <div class="row"><div class="dot cs"></div>OOP using Java (4cr)</div>
+      <div class="row"><div class="dot core"></div>Integrated Circuits (4cr)</div>
+      <div class="row"><div class="dot esc"></div>Design &amp; Engineering / Professional Ethics (2cr)</div>
+      <div class="row"><div class="dot lab"></div>Integrated Circuits Lab (2cr)</div>
+      <div class="row"><div class="dot lab"></div>OOP Lab (2cr)</div>
+      <div class="row"><div class="dot mnc"></div>Constitution of India (non-credit)</div>
+    </div>
+  </div>
+
+  <!-- S5 -->
+  <div class="card">
+    <div class="card-head">Semester 5 <span>23 credits</span></div>
+    <div class="bar">
+      <div class="seg core" style="width:34.8%" title="ECE Core 8cr"></div>
+      <div class="seg cs"   style="width:30.4%" title="CS/Software 7cr"></div>
+      <div class="seg lab"  style="width:17.4%" title="Labs 4cr"></div>
+      <div class="seg hmc"  style="width:17.4%" title="Humanities — non-credit filler"></div>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="dot core"></div>Digital Signal Processing (4cr)</div>
+      <div class="row"><div class="dot core"></div>Microprocessors and Advanced Microcontrollers (4cr)</div>
+      <div class="row"><div class="dot cs"></div>Computer Networks (4cr)</div>
+      <div class="row"><div class="dot cs"></div>Database Management Systems (4cr)</div>
+      <div class="row"><div class="dot cs"></div>Management of Software Systems (3cr)</div>
+      <div class="row"><div class="dot lab"></div>Computer Networking Lab (2cr)</div>
+      <div class="row"><div class="dot lab"></div>DBMS Lab (2cr)</div>
+      <div class="row"><div class="dot mnc"></div>Disaster Management (non-credit)</div>
+    </div>
+  </div>
+
+  <!-- S6 -->
+  <div class="card">
+    <div class="card-head">Semester 6 <span>23 credits</span></div>
+    <div class="bar">
+      <div class="seg core" style="width:52.2%" title="ECE Core 12cr"></div>
+      <div class="seg elec" style="width:13%"   title="Elective 3cr"></div>
+      <div class="seg hmc"  style="width:13%"   title="Humanities 3cr"></div>
+      <div class="seg cs"   style="width:4.3%"  title="Comprehensive 1cr"></div>
+      <div class="seg lab"  style="width:8.7%"  title="Lab 2cr"></div>
+      <div class="seg proj" style="width:8.7%"  title="Mini Project 2cr"></div>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="dot core"></div>Operating Systems (4cr)</div>
+      <div class="row"><div class="dot core"></div>Embedded Systems &amp; IoT (4cr)</div>
+      <div class="row"><div class="dot core"></div>Data Communication and Networking (4cr)</div>
+      <div class="row"><div class="dot elec"></div>Program Elective I — Sensors / Graph Theory / ML / Cloud... (3cr)</div>
+      <div class="row"><div class="dot hmc"></div>Industrial Economics and Foreign Trade (3cr)</div>
+      <div class="row"><div class="dot cs"></div>Comprehensive Course Work — GATE-style exam (1cr)</div>
+      <div class="row"><div class="dot lab"></div>Signal Processing Lab (2cr)</div>
+      <div class="row"><div class="dot proj"></div>Mini Project (2cr)</div>
+    </div>
+  </div>
+
+  <!-- S7 -->
+  <div class="card">
+    <div class="card-head">Semester 7 <span>15 credits</span></div>
+    <div class="bar">
+      <div class="seg core" style="width:20%"   title="ECE Core 3cr"></div>
+      <div class="seg elec" style="width:40%"   title="Electives 6cr"></div>
+      <div class="seg lab"  style="width:13.3%" title="Lab 2cr"></div>
+      <div class="seg proj" style="width:26.7%" title="Seminar + Project 4cr"></div>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="dot core"></div>CMOS VLSI Design (3cr)</div>
+      <div class="row"><div class="dot elec"></div>Program Elective II — ML / Control / Automata / Web... (3cr)</div>
+      <div class="row"><div class="dot elec"></div>Open Elective (other dept.) — IoT / Robotics / OOP... (3cr)</div>
+      <div class="row"><div class="dot lab"></div>Embedded Systems and IoT Lab (2cr)</div>
+      <div class="row"><div class="dot proj"></div>Seminar (2cr)</div>
+      <div class="row"><div class="dot proj"></div>Project Phase I (2cr)</div>
+      <div class="row"><div class="dot mnc"></div>Industrial Safety Engineering (non-credit)</div>
+    </div>
+  </div>
+
+  <!-- S8 -->
+  <div class="card">
+    <div class="card-head">Semester 8 <span>17 credits</span></div>
+    <div class="bar">
+      <div class="seg cs"   style="width:17.6%" title="Algorithms 3cr"></div>
+      <div class="seg elec" style="width:52.9%" title="Electives 9cr"></div>
+      <div class="seg cs"   style="width:5.9%"  title="Comprehensive Viva 1cr"></div>
+      <div class="seg proj" style="width:23.6%" title="Major Project 4cr"></div>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="dot cs"></div>Algorithm Analysis and Design (3cr)</div>
+      <div class="row"><div class="dot elec"></div>Program Elective III — Deep Learning / Compiler / Robotics... (3cr)</div>
+      <div class="row"><div class="dot elec"></div>Program Elective IV — MEMS / Speech Processing / Comm. Engg... (3cr)</div>
+      <div class="row"><div class="dot elec"></div>Program Elective V — RTOS / Low Power VLSI / Blockchain... (3cr)</div>
+      <div class="row"><div class="dot cs"></div>Comprehensive Viva Voce (1cr)</div>
+      <div class="row"><div class="dot proj"></div>Project Phase II — Major Project (4cr)</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Full degree summary -->
+<div class="summary">
+  <div class="sum-head">Full degree category split <span>162 mandatory credits</span></div>
+  <div class="bar" style="height:28px;">
+    <div class="seg math" style="width:9.9%"  title="Mathematics ~16cr"></div>
+    <div class="seg sci"  style="width:4.9%"  title="Basic Science ~8cr"></div>
+    <div class="seg esc"  style="width:10.5%" title="Engg. Science ~17cr"></div>
+    <div class="seg core" style="width:22.8%" title="ECE Core ~37cr"></div>
+    <div class="seg cs"   style="width:21%"   title="CS/Software ~34cr"></div>
+    <div class="seg hmc"  style="width:3.7%"  title="Humanities ~6cr"></div>
+    <div class="seg lab"  style="width:12.3%" title="Labs ~20cr"></div>
+    <div class="seg proj" style="width:7.4%"  title="Project/Seminar ~12cr"></div>
+    <div class="seg elec" style="width:7.5%"  title="Electives ~15cr"></div>
+  </div>
+  <div class="sum-labels">
+    <span>Math ~16cr</span><span>·</span>
+    <span>Basic Science ~8cr</span><span>·</span>
+    <span>Engg. Science ~17cr</span><span>·</span>
+    <strong>ECE Core ~37cr</strong><span>·</span>
+    <strong>CS/Software ~34cr</strong><span>·</span>
+    <span>Humanities ~6cr</span><span>·</span>
+    <span>Labs ~20cr</span><span>·</span>
+    <span>Project/Seminar ~12cr</span><span>·</span>
+    <span>Electives ~15cr</span>
+  </div>
+</div>
+
+</body>
+</html>
