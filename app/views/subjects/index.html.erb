@@ -7,6 +7,9 @@
       Electronics &amp; Computer Engineering · 2019 Scheme ·
       <%= @subjects_by_semester.values.flatten.sum(&:credits) %> credits total
     </p>
+    <p class="text-sm mt-2">
+      <%= link_to "← Back to credit breakdown", root_path, class: "underline" %>
+    </p>
   </header>
 
   <% @subjects_by_semester.each do |semester, subjects| %>

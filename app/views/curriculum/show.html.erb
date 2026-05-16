@@ -1,0 +1,90 @@
+<% content_for :title, "KTU ECE — Subject Category per Semester" %>
+
+<%
+  category_labels = Subject::CATEGORY_LABELS
+%>
+
+<div class="curriculum">
+  <h1>KTU B.Tech ECE — Subject Category per Semester</h1>
+  <p class="subtitle">
+    Electronics and Computer Engineering · 2019 Scheme · <%= @total_credits %> credits
+  </p>
+
+  <div class="legend">
+    <% category_labels.each do |key, label| %>
+      <div class="leg"><div class="ldot cat-<%= key %>"></div><%= label %></div>
+    <% end %>
+  </div>
+
+  <div class="grid">
+    <% @by_semester.each do |semester, subjects| %>
+      <%
+        sem_credits = subjects.sum(&:credits)
+        # Build segments by category, in the order categories first appear within this semester.
+        seg_credits = subjects.group_by(&:category)
+                              .transform_values { |list| list.sum(&:credits) }
+        # mnc (non-credit) is intentionally excluded from the bar — it has 0 credits.
+        bar_total = seg_credits.values.sum
+      %>
+      <div class="card">
+        <div class="card-head">
+          Semester <%= semester %>
+          <span><%= sem_credits %> credits</span>
+        </div>
+
+        <div class="bar">
+          <% seg_credits.each do |cat, cr| %>
+            <% next if cr.zero? %>
+            <div class="seg cat-<%= cat %>"
+                 style="width: <%= ((cr.to_f / bar_total) * 100).round(1) %>%"
+                 title="<%= category_labels[cat] %> <%= cr %>cr"></div>
+          <% end %>
+        </div>
+
+        <div class="rows">
+          <% subjects.each do |s| %>
+            <div class="row">
+              <div class="dot cat-<%= s.category %>"></div>
+              <%= s.name %>
+              <% if s.credits.positive? %>
+                (<%= s.credits %>cr)
+              <% else %>
+                (non-credit)
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="summary">
+    <div class="sum-head">
+      Full degree category split
+      <span><%= @total_credits %> mandatory credits</span>
+    </div>
+
+    <%
+      summary_categories = @total_credits_by_category.reject { |_, cr| cr.zero? }
+      summary_total = summary_categories.values.sum
+    %>
+    <div class="bar" style="height: 28px;">
+      <% summary_categories.each do |cat, cr| %>
+        <div class="seg cat-<%= cat %>"
+             style="width: <%= ((cr.to_f / summary_total) * 100).round(1) %>%"
+             title="<%= category_labels[cat] %> <%= cr %>cr"></div>
+      <% end %>
+    </div>
+
+    <div class="sum-labels">
+      <% summary_categories.each_with_index do |(cat, cr), i| %>
+        <span><%= category_labels[cat] %> <%= cr %>cr</span>
+        <% unless i == summary_categories.size - 1 %><span>·</span><% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="nav-links">
+    <%= link_to "Browse all subjects →", subjects_path %>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+/* Curriculum breakdown page — palette and layout ported from legacy/v1-ktu-ece.html */
+
+.curriculum {
+  font-family: system-ui, sans-serif;
+  background: #f5f4f0;
+  color: #1a1a18;
+  padding: 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.curriculum h1 { font-size: 16px; font-weight: 600; margin: 0 0 4px; }
+.curriculum .subtitle { font-size: 12px; color: #666; margin-bottom: 16px; }
+
+.curriculum .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+.curriculum .leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #555; }
+.curriculum .ldot { width: 10px; height: 10px; border-radius: 2px; }
+
+.curriculum .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) {
+  .curriculum .grid { grid-template-columns: 1fr; }
+}
+
+.curriculum .card { background: #fff; border-radius: 10px; border: 1px solid #e0dfd8; overflow: hidden; }
+.curriculum .card-head {
+  font-size: 12px; font-weight: 600; padding: 8px 12px;
+  background: #f0efe8; border-bottom: 1px solid #e0dfd8;
+  display: flex; justify-content: space-between;
+}
+.curriculum .card-head span { font-weight: 400; color: #777; }
+
+.curriculum .bar { display: flex; height: 22px; }
+.curriculum .seg { height: 100%; }
+
+.curriculum .rows {
+  padding: 8px 12px 10px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.curriculum .row {
+  display: flex; align-items: flex-start; gap: 7px;
+  font-size: 11px; line-height: 1.4;
+}
+.curriculum .dot {
+  width: 8px; height: 8px; border-radius: 2px;
+  flex-shrink: 0; margin-top: 2px;
+}
+
+/* Category colors */
+.curriculum .cat-math { background: #7F77DD; }
+.curriculum .cat-sci  { background: #1D9E75; }
+.curriculum .cat-esc  { background: #378ADD; }
+.curriculum .cat-core { background: #D85A30; }
+.curriculum .cat-cs   { background: #BA7517; }
+.curriculum .cat-hmc  { background: #888780; }
+.curriculum .cat-lab  { background: #D4537E; }
+.curriculum .cat-proj { background: #639922; }
+.curriculum .cat-elec { background: #993556; }
+.curriculum .cat-mnc  { background: #d0cfc8; }
+
+.curriculum .summary {
+  background: #fff; border-radius: 10px; border: 1px solid #e0dfd8;
+  overflow: hidden; margin-top: 14px;
+}
+.curriculum .sum-head {
+  font-size: 12px; font-weight: 600; padding: 8px 12px;
+  background: #f0efe8; border-bottom: 1px solid #e0dfd8;
+  display: flex; justify-content: space-between;
+}
+.curriculum .sum-head span { font-weight: 400; color: #777; }
+.curriculum .sum-labels {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 8px 12px; font-size: 11px; color: #555;
+}
+
+.curriculum .nav-links {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #555;
+}
+.curriculum .nav-links a {
+  color: #1a1a18;
+  text-decoration: underline;
+  margin-right: 12px;
+}
