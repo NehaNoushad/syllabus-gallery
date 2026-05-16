@@ -1,41 +1,63 @@
 <% content_for :title, "KTU ECE Subjects" %>
 
 <div class="max-w-5xl mx-auto px-4 py-8">
-  <header class="mb-6">
+  <header class="mb-4">
     <h1 class="text-2xl font-semibold tracking-tight">KTU B.Tech ECE — Subjects</h1>
     <p class="text-sm text-gray-500">
       Electronics &amp; Computer Engineering · 2019 Scheme ·
-      <%= @subjects_by_semester.values.flatten.sum(&:credits) %> credits total
+      <%= @result_count %> result<%= "s" unless @result_count == 1 %>
     </p>
     <p class="text-sm mt-2">
       <%= link_to "← Back to credit breakdown", root_path, class: "underline" %>
     </p>
   </header>
 
+  <%= form_with url: subjects_path, method: :get, class: "filter-form", data: { turbo_frame: "_top" } do |f| %>
+    <%= f.text_field :q,
+                     value: @query,
+                     placeholder: "Search subjects by name or code…",
+                     autocomplete: "off",
+                     class: "search-input",
+                     oninput: "clearTimeout(window._st); window._st = setTimeout(()=>this.form.requestSubmit(), 250);" %>
+
+    <div class="chips">
+      <%= link_to "All", subjects_path(q: @query.presence),
+                  class: "chip #{'chip-active' unless @category}" %>
+      <% Subject::CATEGORY_LABELS.each do |key, label| %>
+        <%= link_to label, subjects_path(q: @query.presence, category: key),
+                    class: "chip #{'chip-active' if @category == key}" %>
+      <% end %>
+      <% if @query.present? || @category %>
+        <%= link_to "Clear", subjects_path, class: "chip chip-clear" %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @subjects_by_semester.empty? %>
+    <p class="empty-results">No subjects match those filters.</p>
+  <% end %>
+
   <% @subjects_by_semester.each do |semester, subjects| %>
     <% sem_credits = subjects.sum(&:credits) %>
-    <section class="mb-8 border border-gray-200 rounded-lg overflow-hidden">
-      <div class="flex justify-between items-baseline px-4 py-2 bg-gray-50 border-b border-gray-200">
-        <h2 class="text-sm font-semibold">Semester <%= semester %></h2>
-        <span class="text-xs text-gray-500"><%= sem_credits %> credits</span>
+    <section class="subject-section">
+      <div class="subject-section-head">
+        <h2>Semester <%= semester %></h2>
+        <span><%= sem_credits %> credits</span>
       </div>
 
-      <ul class="divide-y divide-gray-100">
+      <ul class="subject-list">
         <% subjects.each do |s| %>
-          <li class="flex items-center justify-between px-4 py-2 text-sm">
-            <div class="flex items-center gap-3">
-              <span class="inline-block w-2 h-2 rounded-sm bg-<%= s.category %>"
-                    style="<%= "background-color: #{category_color(s.category)};" %>"></span>
+          <li>
+            <div class="left">
+              <span class="dot cat-<%= s.category %>"></span>
               <span><%= s.name %></span>
               <% if s.elective_group.present? %>
-                <span class="text-xs text-gray-400">(<%= s.elective_group %>)</span>
+                <span class="muted">(<%= s.elective_group %>)</span>
               <% end %>
             </div>
-            <div class="flex items-center gap-3 text-xs text-gray-500">
-              <span><%= s.category_label %></span>
-              <span class="font-mono w-10 text-right">
-                <%= s.credits.zero? ? "—" : "#{s.credits} cr" %>
-              </span>
+            <div class="right">
+              <span class="muted"><%= s.category_label %></span>
+              <span class="cr"><%= s.credits.zero? ? "—" : "#{s.credits} cr" %></span>
             </div>
           </li>
         <% end %>
