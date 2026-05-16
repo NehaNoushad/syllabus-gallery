@@ -353,6 +353,103 @@ turbo-frame { display: block; }
 }
 .binary-foot:last-child { border-bottom: 0; }
 
+/* ─────────────────────── HOMEPAGE 2×4 GRID ───────────────────────
+   Eight semester "cards" laid out 2 columns × 4 rows so the whole
+   degree is visible in roughly one glance. */
+.binary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--ink);
+}
+@media (max-width: 800px) {
+  .binary-grid { grid-template-columns: 1fr; }
+}
+
+.binary-card {
+  position: relative;
+  padding: 32px 40px 32px 72px;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.binary-card:nth-child(2n)   { border-right: 0; }
+.binary-card:nth-last-child(-n+2) { border-bottom: 0; }
+@media (max-width: 800px) {
+  .binary-card { border-right: 0; }
+  .binary-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--ink); }
+  .binary-card:last-child { border-bottom: 0; }
+}
+
+.binary-card::before {
+  content: "";
+  position: absolute;
+  top: 32px; bottom: 32px; left: 40px;
+  width: var(--rule);
+  background: var(--ink);
+}
+
+.binary-card-head {
+  display: flex; align-items: baseline; gap: 14px;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--ink);
+}
+.binary-card-num {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+}
+.binary-card-title {
+  font-size: 20px; font-weight: 700; letter-spacing: -0.02em;
+  flex: 1;
+}
+.binary-card-credits {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  font-weight: 500;
+}
+
+.binary-card-subjects { list-style: none; margin: 0; padding: 0; }
+.binary-card-subjects li {
+  display: grid;
+  grid-template-columns: 26px 1fr auto;
+  align-items: baseline;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--ink);
+  font-size: 12px;
+}
+.binary-card-subjects li:last-child { border-bottom: 0; }
+
+.binary-card-subjects .num {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.06em;
+}
+.binary-card-subjects .name {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 12px; font-weight: 500; line-height: 1.35;
+  letter-spacing: -0.005em;
+  padding-right: 12px;
+}
+.binary-card-subjects .name .grp {
+  font-weight: 300; opacity: 0.55;
+}
+.binary-card-subjects .code,
+.binary-row-name .code {
+  display: inline-block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.55;
+  margin-right: 7px;
+  vertical-align: 1px;
+}
+.binary-row-name .code { font-size: 10px; margin-right: 9px; }
+.binary-card-subjects .cr {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px; font-weight: 500;
+  white-space: nowrap;
+}
+
 /* ─────────────────────── CATEGORY OVERVIEW (homepage) ─────────────────────── */
 .binary-cat-overview {
   padding: 64px 48px 56px;
@@ -400,6 +497,16 @@ turbo-frame { display: block; }
   font-size: 13px; font-weight: 500;
   text-align: right;
 }
+
+/* Inverted variant of the category overview — black plate, white ink */
+.binary-cat-overview.inverted {
+  background: var(--ink);
+  color: var(--paper);
+}
+.binary-cat-overview.inverted::before          { background: var(--paper); }
+.binary-cat-overview.inverted .binary-cat-table li,
+.binary-cat-overview.inverted .binary-semester-head { border-bottom-color: var(--paper); }
+.binary-cat-overview.inverted .binary-cat-bar  { background: var(--paper); }
 
 /* ─────────────────────── FORM PAGES (auth, plans/new) ─────────────────────── */
 .binary-form-page {

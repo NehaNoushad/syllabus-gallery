@@ -94,7 +94,7 @@
                     <span class="binary-row-num"><%= format("%02d", i + 1) %></span>
                     <div class="binary-row-body">
                       <span class="binary-row-name">
-                        <%= s.name %><% if s.elective_group.present? %> <span style="font-weight:300; opacity:0.6;">— <%= s.elective_group %></span><% end %>
+                        <% if s.code.present? && !s.code.include?("XXX") %><span class="code"><%= s.code %></span><% end %><%= s.name %><% if s.elective_group.present? %> <span style="font-weight:300; opacity:0.6;">— <%= s.elective_group %></span><% end %>
                       </span>
                       <span class="binary-row-meta">
                         <%= s.category_label %>.

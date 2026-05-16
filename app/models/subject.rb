@@ -12,8 +12,7 @@ class Subject < ApplicationRecord
     "hmc"  => "Humanities",
     "lab"  => "Lab / Workshop",
     "proj" => "Project / Seminar",
-    "elec" => "Elective",
-    "mnc"  => "Non-credit"
+    "elec" => "Elective"
   }.freeze
 
   scope :for_program, ->(branch:, scheme:) { where(branch: branch, scheme: scheme) }

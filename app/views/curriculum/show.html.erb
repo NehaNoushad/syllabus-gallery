@@ -35,8 +35,34 @@
   <span>8 semesters</span>
 </section>
 
-<!-- BY CATEGORY OVERVIEW -->
-<section class="binary-cat-overview">
+<!-- 2 × 4 SEMESTER GRID — entire degree visible at a glance -->
+<section class="binary-grid">
+  <% @by_semester.each do |semester, subjects| %>
+    <% sem_credits = subjects.sum(&:credits) %>
+    <article class="binary-card">
+      <header class="binary-card-head">
+        <span class="binary-card-num"><%= format("%02d", semester) %> /</span>
+        <h2 class="binary-card-title">Semester <%= semester %></h2>
+        <span class="binary-card-credits"><%= sem_credits %> credits</span>
+      </header>
+
+      <ol class="binary-card-subjects">
+        <% subjects.each_with_index do |s, i| %>
+          <li>
+            <span class="num"><%= format("%02d", i + 1) %></span>
+            <span class="name">
+              <% if s.code.present? && !s.code.include?("XXX") %><span class="code"><%= s.code %></span><% end %><%= s.name %>
+            </span>
+            <span class="cr"><%= s.credits.zero? ? "—" : "#{s.credits} cr" %></span>
+          </li>
+        <% end %>
+      </ol>
+    </article>
+  <% end %>
+</section>
+
+<!-- BY CATEGORY OVERVIEW — the bottom summary, like v1 -->
+<section class="binary-cat-overview inverted">
   <div class="binary-cat-inner">
     <header class="binary-semester-head">
       <span class="binary-sem-num">00 /</span>
@@ -56,47 +82,6 @@
     </ol>
   </div>
 </section>
-
-<!-- BY SEMESTER -->
-<div class="binary-semesters">
-  <% @by_semester.each do |semester, subjects| %>
-    <% sem_credits = subjects.sum(&:credits) %>
-    <% inverted = semester.to_i.even? ? "inverted" : "" %>
-    <article class="binary-semester <%= inverted %>">
-      <div class="binary-semester-inner">
-        <header class="binary-semester-head">
-          <span class="binary-sem-num"><%= format("%02d", semester) %> /</span>
-          <h2 class="binary-sem-title">Semester <%= semester %></h2>
-          <span class="binary-sem-credits"><%= sem_credits %> credits</span>
-        </header>
-
-        <ol class="binary-subjects">
-          <% subjects.each_with_index do |s, i| %>
-            <li>
-              <span class="binary-row-num"><%= format("%02d", i + 1) %></span>
-              <div class="binary-row-body">
-                <span class="binary-row-name">
-                  <%= s.name %><% if s.elective_group.present? %> <span style="font-weight:300; opacity:0.55;">— <%= s.elective_group %></span><% end %>
-                </span>
-                <span class="binary-row-meta">
-                  <%= s.category_label %>.
-                  <% if s.credits.positive? %>
-                    <%= s.credits %> <%= s.credits == 1 ? "credit" : "credits" %>.
-                  <% else %>
-                    Non-credit.
-                  <% end %>
-                </span>
-              </div>
-              <span class="binary-row-cr">
-                <%= s.credits.zero? ? "—" : "#{s.credits} cr" %>
-              </span>
-            </li>
-          <% end %>
-        </ol>
-      </div>
-    </article>
-  <% end %>
-</div>
 
 <footer class="binary-foot">
   <span>End of curriculum</span>
