@@ -1,12 +1,24 @@
-# KTU ECE — Curriculum Breakdown
+# README
 
-A self-contained HTML visualization of the KTU B.Tech ECE (Electronics &
-Computer Engineering, 2019 scheme) curriculum, showing the credit split per
-semester across categories like Mathematics, ECE Core, CS/Software, Labs,
-Electives, and more.
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-## Files
-- `v1-ktu-ece.html` — current version. Open in any browser.
+Things you may want to cover:
 
-## Total
-162 mandatory credits across 8 semesters.
+* Ruby version
+
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
