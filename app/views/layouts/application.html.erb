@@ -27,6 +27,7 @@
       <%= link_to "KTU ECE", root_path, class: "brand" %>
       <div class="spacer"></div>
       <% if Current.user %>
+        <%= link_to "My plans", degree_plans_path %>
         <span class="who"><%= Current.user.email_address %></span>
         <%= button_to "Log out", session_path, method: :delete, class: "linklike" %>
       <% else %>

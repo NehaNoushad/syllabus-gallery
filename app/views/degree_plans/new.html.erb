@@ -1,0 +1,25 @@
+<% content_for :title, "Create degree plan" %>
+
+<div class="plans-page">
+  <h1>New plan</h1>
+
+  <% if @plan.errors.any? %>
+    <ul class="errors">
+      <% @plan.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
+    </ul>
+  <% end %>
+
+  <%= form_with model: @plan, class: "plan-form" do |f| %>
+    <label>
+      Plan title
+      <%= f.text_field :title, required: true, autofocus: true %>
+    </label>
+    <%= f.hidden_field :branch %>
+    <%= f.hidden_field :scheme %>
+    <p class="hint">Currently only the ECE 2019 scheme is supported.</p>
+    <div class="form-actions">
+      <%= f.submit "Create plan", class: "btn-primary" %>
+      <%= link_to "Cancel", degree_plans_path %>
+    </div>
+  <% end %>
+</div>

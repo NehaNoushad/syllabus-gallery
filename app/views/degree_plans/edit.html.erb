@@ -1,0 +1,65 @@
+<% content_for :title, "Edit #{@plan.title}" %>
+
+<div class="curriculum">
+  <header class="plans-header">
+    <h1>Edit picks — <%= @plan.title %></h1>
+    <%= link_to "Cancel", @plan %>
+  </header>
+
+  <%= form_with model: @plan, url: degree_plan_path(@plan), method: :patch, class: "plan-edit-form" do |f| %>
+    <%= f.hidden_field :title %>
+    <%= f.hidden_field :branch %>
+    <%= f.hidden_field :scheme %>
+
+    <div class="grid">
+      <% @by_semester.each do |semester, subjects| %>
+        <%
+          sem_credits = subjects.sum(&:credits)
+          seg = subjects.group_by(&:category).transform_values { |list| list.sum(&:credits) }
+          bar_total = seg.values.sum
+        %>
+        <div class="card">
+          <div class="card-head">
+            Semester <%= semester %>
+            <span><%= sem_credits %> credits</span>
+          </div>
+
+          <div class="bar">
+            <% seg.each do |cat, cr| %>
+              <% next if cr.zero? %>
+              <div class="seg cat-<%= cat %>" style="width: <%= ((cr.to_f / bar_total) * 100).round(1) %>%"></div>
+            <% end %>
+          </div>
+
+          <div class="rows">
+            <% subjects.each do |s| %>
+              <div class="row">
+                <div class="dot cat-<%= s.category %>"></div>
+                <% if s.kind == "elective_slot" %>
+                  <%
+                    options = @options_by_group[s.elective_group] || []
+                    current_subject_id = @selections_by_group[s.elective_group]&.subject_id
+                  %>
+                  <strong><%= s.elective_group %>:</strong>
+                  <%= select_tag "degree_plan[selections][#{s.elective_group}]",
+                                 options_for_select([["— pick one —", ""]] + options.map { |o| [o.name, o.id] }, current_subject_id),
+                                 class: "elective-select" %>
+                  (<%= s.credits %>cr)
+                <% elsif s.credits.positive? %>
+                  <%= s.name %> (<%= s.credits %>cr)
+                <% else %>
+                  <%= s.name %> (non-credit)
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "Save picks", class: "btn-primary" %>
+      <%= link_to "Discard changes", @plan %>
+    </div>
+  <% end %>
+</div>

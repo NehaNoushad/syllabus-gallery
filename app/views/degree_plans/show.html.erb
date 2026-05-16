@@ -1,0 +1,64 @@
+<% content_for :title, @plan.title %>
+
+<%
+  category_labels = Subject::CATEGORY_LABELS
+  total_credits = @subjects.where.not(kind: "elective_option").sum(:credits)
+%>
+
+<div class="curriculum">
+  <header class="plans-header">
+    <div>
+      <h1><%= @plan.title %></h1>
+      <p class="subtitle">
+        <%= @plan.branch %> · <%= @plan.scheme %> Scheme · <%= total_credits %> credits
+      </p>
+    </div>
+    <div>
+      <%= link_to "Edit picks", edit_degree_plan_path(@plan), class: "btn-primary" %>
+      <%= button_to "Delete plan", @plan, method: :delete, form: { data: { turbo_confirm: "Delete this plan?" } }, class: "linklike" %>
+    </div>
+  </header>
+
+  <div class="grid">
+    <% @by_semester.each do |semester, subjects| %>
+      <%
+        sem_credits = subjects.sum(&:credits)
+        seg = subjects.group_by(&:category).transform_values { |list| list.sum(&:credits) }
+        bar_total = seg.values.sum
+      %>
+      <div class="card">
+        <div class="card-head">
+          Semester <%= semester %>
+          <span><%= sem_credits %> credits</span>
+        </div>
+
+        <div class="bar">
+          <% seg.each do |cat, cr| %>
+            <% next if cr.zero? %>
+            <div class="seg cat-<%= cat %>" style="width: <%= ((cr.to_f / bar_total) * 100).round(1) %>%"></div>
+          <% end %>
+        </div>
+
+        <div class="rows">
+          <% subjects.each do |s| %>
+            <div class="row">
+              <div class="dot cat-<%= s.category %>"></div>
+              <% if s.kind == "elective_slot" %>
+                <% chosen = @selections_by_group[s.elective_group]&.subject %>
+                <strong><%= s.elective_group %>:</strong>
+                <%= chosen ? chosen.name : "(not chosen)" %>
+                (<%= s.credits %>cr)
+              <% elsif s.credits.positive? %>
+                <%= s.name %> (<%= s.credits %>cr)
+              <% else %>
+                <%= s.name %> (non-credit)
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <p class="nav-links"><%= link_to "← All plans", degree_plans_path %></p>
+</div>

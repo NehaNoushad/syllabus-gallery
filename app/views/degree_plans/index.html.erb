@@ -1,0 +1,21 @@
+<% content_for :title, "My Degree Plans" %>
+
+<div class="plans-page">
+  <header class="plans-header">
+    <h1>My Degree Plans</h1>
+    <%= link_to "New plan", new_degree_plan_path, class: "btn-primary" %>
+  </header>
+
+  <% if @plans.any? %>
+    <ul class="plan-list">
+      <% @plans.each do |plan| %>
+        <li>
+          <%= link_to plan.title, plan, class: "plan-title" %>
+          <span class="plan-meta"><%= plan.branch %> · <%= plan.scheme %> · <%= plan.plan_selections.count %> electives picked</span>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="empty">You haven't created any plans yet. <%= link_to "Start one", new_degree_plan_path %>.</p>
+  <% end %>
+</div>

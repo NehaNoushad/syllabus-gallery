@@ -96,4 +96,65 @@ SUBJECTS.each do |row|
   )
 end
 
-puts "Seeded #{Subject.count} subjects."
+# Elective options the user can pick from for each slot. All worth 3 credits.
+ELECTIVE_OPTIONS = {
+  "Program Elective I" => [
+    "Sensors and Transducers",
+    "Graph Theory and Algorithms",
+    "Introduction to Machine Learning",
+    "Cloud Computing",
+    "Information Theory and Coding"
+  ],
+  "Program Elective II" => [
+    "Advanced Machine Learning",
+    "Control Systems",
+    "Theory of Computation",
+    "Web Programming",
+    "Digital Image Processing"
+  ],
+  "Open Elective" => [
+    "Introduction to IoT",
+    "Introduction to Robotics",
+    "Object-Oriented Programming (open)",
+    "Renewable Energy Systems",
+    "Industrial Instrumentation"
+  ],
+  "Program Elective III" => [
+    "Deep Learning",
+    "Compiler Design",
+    "Robotics and Automation",
+    "Wireless Sensor Networks",
+    "Bioelectronics"
+  ],
+  "Program Elective IV" => [
+    "MEMS",
+    "Speech Processing",
+    "Optical Communication Engineering",
+    "Satellite Communication",
+    "Mobile Communication"
+  ],
+  "Program Elective V" => [
+    "Real-Time Operating Systems",
+    "Low Power VLSI Design",
+    "Blockchain Technologies",
+    "Cybersecurity",
+    "Quantum Computing Basics"
+  ]
+}
+
+ELECTIVE_OPTIONS.each do |group, names|
+  names.each do |name|
+    Subject.create!(
+      name:           name,
+      credits:        3,
+      category:       "elec",
+      kind:           "elective_option",
+      semester:       nil,
+      elective_group: group,
+      branch:         "ECE",
+      scheme:         "2019"
+    )
+  end
+end
+
+puts "Seeded #{Subject.count} subjects (#{Subject.where(kind: 'elective_slot').count} slots, #{Subject.where(kind: 'elective_option').count} options)."
