@@ -23,6 +23,25 @@
   </head>
 
   <body>
+    <nav class="site-nav">
+      <%= link_to "KTU ECE", root_path, class: "brand" %>
+      <div class="spacer"></div>
+      <% if Current.user %>
+        <span class="who"><%= Current.user.email_address %></span>
+        <%= button_to "Log out", session_path, method: :delete, class: "linklike" %>
+      <% else %>
+        <%= link_to "Sign in", new_session_path %>
+        <%= link_to "Create account", sign_up_path %>
+      <% end %>
+    </nav>
+
+    <% if notice = flash[:notice] %>
+      <div class="flash-notice"><%= notice %></div>
+    <% end %>
+    <% if alert = flash[:alert] %>
+      <div class="flash-alert"><%= alert %></div>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

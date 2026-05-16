@@ -1,4 +1,6 @@
 class CurriculumController < ApplicationController
+  allow_unauthenticated_access
+
   BRANCH = "ECE"
   SCHEME = "2019"
 
