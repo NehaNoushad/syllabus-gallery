@@ -1,40 +1,52 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <% if alert = flash[:alert] %>
-    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
-  <% end %>
+<% content_for :title, "Create account — KTU ECE" %>
 
-  <h1 class="font-bold text-4xl">Create your account</h1>
+<div class="binary-form-page">
+  <p class="binary-eyebrow">New student</p>
+  <h1>Create your account.</h1>
 
   <% if @user.errors.any? %>
-    <ul class="my-4 text-sm text-red-600 list-disc list-inside">
+    <ul class="binary-errors">
       <% @user.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
   <% end %>
 
-  <%= form_with model: @user, url: sign_up_path, class: "contents" do |form| %>
-    <div class="my-5">
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", class: "block shadow-sm rounded-md border border-gray-400 focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
+  <%= form_with model: @user, url: sign_up_path, class: "binary-form" do |form| %>
+    <div class="binary-field">
+      <label class="binary-label" for="user_email_address">Email</label>
+      <%= form.email_field :email_address,
+                           id: "user_email_address",
+                           required: true,
+                           autofocus: true,
+                           autocomplete: "username",
+                           class: "binary-input" %>
     </div>
 
-    <div class="my-5">
-      <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Choose a password (min 8 characters)", maxlength: 72, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
+    <div class="binary-field">
+      <label class="binary-label" for="user_password">Password</label>
+      <%= form.password_field :password,
+                              id: "user_password",
+                              required: true,
+                              autocomplete: "new-password",
+                              maxlength: 72,
+                              class: "binary-input" %>
+      <span class="binary-hint">Minimum 8 characters.</span>
     </div>
 
-    <div class="my-5">
-      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Confirm your password", maxlength: 72, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
+    <div class="binary-field">
+      <label class="binary-label" for="user_password_confirmation">Confirm password</label>
+      <%= form.password_field :password_confirmation,
+                              id: "user_password_confirmation",
+                              required: true,
+                              autocomplete: "new-password",
+                              maxlength: 72,
+                              class: "binary-input" %>
     </div>
 
-    <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-      <div class="inline">
-        <%= form.submit "Create account", class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-      </div>
-
-      <div class="mt-4 text-sm text-gray-500 sm:mt-0">
-        Already have an account?
-        <%= link_to "Sign in", new_session_path, class: "text-gray-700 underline hover:no-underline" %>
-      </div>
+    <div class="binary-form-actions">
+      <%= form.submit "Create account", class: "binary-btn" %>
+      <%= link_to "Already have one", new_session_path, class: "binary-link" %>
     </div>
   <% end %>
 </div>

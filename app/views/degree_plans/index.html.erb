@@ -1,21 +1,31 @@
-<% content_for :title, "My Degree Plans" %>
+<% content_for :title, "Plans — KTU ECE" %>
 
-<div class="plans-page">
-  <header class="plans-header">
-    <h1>My Degree Plans</h1>
-    <%= link_to "New plan", new_degree_plan_path, class: "btn-primary" %>
+<div class="binary-plans-page">
+  <header>
+    <div>
+      <p class="binary-eyebrow">Your study</p>
+      <h1>Plans.</h1>
+    </div>
+    <%= link_to "New plan", new_degree_plan_path, class: "binary-btn" %>
   </header>
 
   <% if @plans.any? %>
-    <ul class="plan-list">
-      <% @plans.each do |plan| %>
+    <ol class="binary-plans-list">
+      <% @plans.each_with_index do |plan, i| %>
         <li>
-          <%= link_to plan.title, plan, class: "plan-title" %>
-          <span class="plan-meta"><%= plan.branch %> · <%= plan.scheme %> · <%= plan.plan_selections.count %> electives picked</span>
+          <span class="num"><%= format("%02d", i + 1) %></span>
+          <%= link_to plan.title, plan, class: "name" %>
+          <span class="meta">
+            <%= plan.branch %> · <%= plan.scheme %> · <%= plan.plan_selections.count %> picks
+          </span>
         </li>
       <% end %>
-    </ul>
+    </ol>
   <% else %>
-    <p class="empty">You haven't created any plans yet. <%= link_to "Start one", new_degree_plan_path %>.</p>
+    <p class="binary-lede" style="max-width: 60ch;">
+      You haven't created any plans yet. A plan lets you pick your electives across
+      the six elective slots and see the credit picture filled in.
+      <%= link_to "Start one", new_degree_plan_path, class: "binary-link" %>.
+    </p>
   <% end %>
 </div>

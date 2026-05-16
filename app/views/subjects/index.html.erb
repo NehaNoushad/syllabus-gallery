@@ -1,67 +1,159 @@
-<% content_for :title, "KTU ECE Subjects" %>
+<% content_for :title, "Subjects — KTU ECE" %>
 
-<div class="max-w-5xl mx-auto px-4 py-8">
-  <header class="mb-4">
-    <h1 class="text-2xl font-semibold tracking-tight">KTU B.Tech ECE — Subjects</h1>
-    <p class="text-sm text-gray-500">
-      Electronics &amp; Computer Engineering · 2019 Scheme ·
-      <%= @result_count %> result<%= "s" unless @result_count == 1 %>
-    </p>
-    <p class="text-sm mt-2">
-      <%= link_to "← Back to credit breakdown", root_path, class: "underline" %>
-    </p>
-  </header>
+<% total_credits = @subjects_by_semester.values.flatten.sum(&:credits) %>
 
-  <%= form_with url: subjects_path, method: :get, class: "filter-form", data: { turbo_frame: "_top" } do |f| %>
-    <%= f.text_field :q,
-                     value: @query,
-                     placeholder: "Search subjects by name or code…",
-                     autocomplete: "off",
-                     class: "search-input",
-                     oninput: "clearTimeout(window._st); window._st = setTimeout(()=>this.form.requestSubmit(), 250);" %>
-
-    <div class="chips">
-      <%= link_to "All", subjects_path(q: @query.presence),
-                  class: "chip #{'chip-active' unless @category}" %>
-      <% Subject::CATEGORY_LABELS.each do |key, label| %>
-        <%= link_to label, subjects_path(q: @query.presence, category: key),
-                    class: "chip #{'chip-active' if @category == key}" %>
-      <% end %>
-      <% if @query.present? || @category %>
-        <%= link_to "Clear", subjects_path, class: "chip chip-clear" %>
-      <% end %>
+  <!-- HERO ─ hard split: open notebook (left) / authority of print (right) -->
+  <section class="binary-hero">
+    <div class="binary-hero-left">
+      <p class="binary-eyebrow">KTU · B.Tech · 2019 Scheme</p>
+      <h1 class="binary-display">Subjects</h1>
+      <p class="binary-lede">
+        A complete catalog of the Electronics &amp; Computer Engineering curriculum —
+        every subject, every semester, every credit. No commentary.
+      </p>
+      <%= link_to "← Index — credit breakdown", root_path, class: "backlink" %>
     </div>
-  <% end %>
+    <div class="binary-hero-right">
+      <p class="binary-eyebrow">Catalog</p>
+      <h1 class="binary-display">Study<br>the source</h1>
+      <p class="binary-lede">
+        Numbered. Ordered. Sequential. The shape of the degree, presented as it is intended to be read.
+      </p>
+    </div>
+  </section>
 
-  <% if @subjects_by_semester.empty? %>
-    <p class="empty-results">No subjects match those filters.</p>
-  <% end %>
+  <!-- CREDIBILITY STRIP -->
+  <section class="binary-credline">
+    <span>APJ Abdul Kalam Technological University</span>
+    <span>B.Tech Electronics &amp; Computer Engineering</span>
+    <span>2019 Scheme</span>
+    <span>162 mandatory credits</span>
+    <span>8 semesters</span>
+  </section>
 
-  <% @subjects_by_semester.each do |semester, subjects| %>
-    <% sem_credits = subjects.sum(&:credits) %>
-    <section class="subject-section">
-      <div class="subject-section-head">
-        <h2>Semester <%= semester %></h2>
-        <span><%= sem_credits %> credits</span>
-      </div>
+  <!-- FILTER + RESULTS share a Turbo Frame so chip/search clicks update
+       inline (no full-page navigation, no scroll-to-top).
+       We deliberately do NOT use data-turbo-action="advance" because that
+       promotes the frame nav to a page advance, which scrolls to top.
+       The little script at the bottom of this view updates the browser URL
+       via history.replaceState so the filter state is still shareable. -->
+  <%= turbo_frame_tag "catalog" do %>
 
-      <ul class="subject-list">
-        <% subjects.each do |s| %>
-          <li>
-            <div class="left">
-              <span class="dot cat-<%= s.category %>"></span>
-              <span><%= s.name %></span>
-              <% if s.elective_group.present? %>
-                <span class="muted">(<%= s.elective_group %>)</span>
-              <% end %>
-            </div>
-            <div class="right">
-              <span class="muted"><%= s.category_label %></span>
-              <span class="cr"><%= s.credits.zero? ? "—" : "#{s.credits} cr" %></span>
-            </div>
-          </li>
-        <% end %>
-      </ul>
+    <section class="binary-filter">
+      <%= form_with url: subjects_path, method: :get do |f| %>
+        <div class="binary-filter-row">
+          <div>
+            <label class="binary-search-label" for="binary-q">Search</label>
+            <%= f.text_field :q,
+                             id: "binary-q",
+                             value: @query,
+                             placeholder: "Search by name or code",
+                             autocomplete: "off",
+                             class: "binary-search",
+                             data: { turbo_permanent: true },
+                             oninput: "clearTimeout(window._st); window._st = setTimeout(()=>this.form.requestSubmit(), 250);" %>
+          </div>
+          <div class="binary-results">
+            <%= @result_count %> <%= @result_count == 1 ? "result" : "results" %>
+          </div>
+        </div>
+
+        <div class="binary-chips">
+          <%= link_to "All", subjects_path(q: @query.presence),
+                      class: "binary-chip #{'binary-chip-active' unless @category}" %>
+          <% Subject::CATEGORY_LABELS.each do |key, label| %>
+            <%= link_to label, subjects_path(q: @query.presence, category: key),
+                        class: "binary-chip #{'binary-chip-active' if @category == key}" %>
+          <% end %>
+          <% if @query.present? || @category %>
+            <%= link_to "Clear", subjects_path, class: "binary-chip binary-chip-clear" %>
+          <% end %>
+        </div>
+      <% end %>
     </section>
+
+    <!-- SEMESTER SECTIONS -->
+    <% if @subjects_by_semester.empty? %>
+      <div class="binary-empty">No subjects match those filters.</div>
+    <% else %>
+      <div class="binary-semesters">
+        <% @subjects_by_semester.each do |semester, subjects| %>
+          <% sem_total = subjects.sum(&:credits) %>
+          <% inverted = semester.to_i.even? ? "inverted" : "" %>
+          <article class="binary-semester <%= inverted %>">
+            <div class="binary-semester-inner">
+              <header class="binary-semester-head">
+                <span class="binary-sem-num"><%= format("%02d", semester) %> /</span>
+                <h2 class="binary-sem-title">Semester <%= semester %></h2>
+                <span class="binary-sem-credits"><%= sem_total %> credits</span>
+              </header>
+
+              <ol class="binary-subjects">
+                <% subjects.each_with_index do |s, i| %>
+                  <li>
+                    <span class="binary-row-num"><%= format("%02d", i + 1) %></span>
+                    <div class="binary-row-body">
+                      <span class="binary-row-name">
+                        <%= s.name %><% if s.elective_group.present? %> <span style="font-weight:300; opacity:0.6;">— <%= s.elective_group %></span><% end %>
+                      </span>
+                      <span class="binary-row-meta">
+                        <%= s.category_label %>.
+                        <% if s.credits.positive? %>
+                          <%= s.credits %> <%= s.credits == 1 ? "credit" : "credits" %>.
+                        <% else %>
+                          Non-credit.
+                        <% end %>
+                      </span>
+                    </div>
+                    <span class="binary-row-cr">
+                      <%= s.credits.zero? ? "—" : "#{s.credits} cr" %>
+                    </span>
+                  </li>
+                <% end %>
+              </ol>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    <% end %>
+
+    <footer class="binary-foot">
+      <span>End of catalog</span>
+      <span><%= total_credits %> credits total</span>
+    </footer>
+
   <% end %>
-</div>
+
+  <script>
+    // Two jobs:
+    //  1. Preserve scroll position across catalog frame navigations.
+    //     Turbo Frames scroll the new frame top into view by default, which
+    //     yanks the page up to ~351px (frame top) every time you tap a chip.
+    //     We snapshot scrollY before the fetch, then restore it on load.
+    //  2. Reflect the new frame URL in the address bar so the active filter
+    //     state is shareable / bookmarkable, without pushing history.
+    (function () {
+      var pendingScrollY = null;
+
+      document.addEventListener("turbo:before-fetch-request", function (event) {
+        if (event.target && event.target.id === "catalog") {
+          pendingScrollY = window.scrollY;
+        }
+      });
+
+      document.addEventListener("turbo:frame-load", function (event) {
+        var frame = event.target;
+        if (frame.id !== "catalog") return;
+
+        if (pendingScrollY !== null) {
+          window.scrollTo(0, pendingScrollY);
+          pendingScrollY = null;
+        }
+
+        if (frame.src) {
+          var u = new URL(frame.src, window.location.origin);
+          window.history.replaceState(null, "", u.pathname + u.search);
+        }
+      });
+    })();
+  </script>

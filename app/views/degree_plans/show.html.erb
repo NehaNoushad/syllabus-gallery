@@ -1,64 +1,93 @@
-<% content_for :title, @plan.title %>
+<% content_for :title, "#{@plan.title} — KTU ECE" %>
 
-<%
-  category_labels = Subject::CATEGORY_LABELS
-  total_credits = @subjects.where.not(kind: "elective_option").sum(:credits)
-%>
-
-<div class="curriculum">
-  <header class="plans-header">
-    <div>
-      <h1><%= @plan.title %></h1>
-      <p class="subtitle">
-        <%= @plan.branch %> · <%= @plan.scheme %> Scheme · <%= total_credits %> credits
-      </p>
+<!-- HERO -->
+<section class="binary-hero">
+  <div class="binary-hero-left">
+    <p class="binary-eyebrow">Plan</p>
+    <h1 class="binary-display"><%= @plan.title %></h1>
+    <p class="binary-lede">
+      <%= @plan.branch %> · <%= @plan.scheme %> Scheme ·
+      <%= @plan.plan_selections.count %> of <%= @options_by_group.keys.count %> elective slots filled.
+    </p>
+    <div style="display: flex; gap: 18px; margin-top: 14px;">
+      <%= link_to "Edit picks", edit_degree_plan_path(@plan), class: "binary-btn" %>
+      <%= button_to "Delete plan",
+                    @plan,
+                    method: :delete,
+                    form: { data: { turbo_confirm: "Delete this plan? This cannot be undone." } },
+                    class: "binary-btn binary-btn-secondary" %>
     </div>
-    <div>
-      <%= link_to "Edit picks", edit_degree_plan_path(@plan), class: "btn-primary" %>
-      <%= button_to "Delete plan", @plan, method: :delete, form: { data: { turbo_confirm: "Delete this plan?" } }, class: "linklike" %>
-    </div>
-  </header>
-
-  <div class="grid">
-    <% @by_semester.each do |semester, subjects| %>
-      <%
-        sem_credits = subjects.sum(&:credits)
-        seg = subjects.group_by(&:category).transform_values { |list| list.sum(&:credits) }
-        bar_total = seg.values.sum
-      %>
-      <div class="card">
-        <div class="card-head">
-          Semester <%= semester %>
-          <span><%= sem_credits %> credits</span>
-        </div>
-
-        <div class="bar">
-          <% seg.each do |cat, cr| %>
-            <% next if cr.zero? %>
-            <div class="seg cat-<%= cat %>" style="width: <%= ((cr.to_f / bar_total) * 100).round(1) %>%"></div>
-          <% end %>
-        </div>
-
-        <div class="rows">
-          <% subjects.each do |s| %>
-            <div class="row">
-              <div class="dot cat-<%= s.category %>"></div>
-              <% if s.kind == "elective_slot" %>
-                <% chosen = @selections_by_group[s.elective_group]&.subject %>
-                <strong><%= s.elective_group %>:</strong>
-                <%= chosen ? chosen.name : "(not chosen)" %>
-                (<%= s.credits %>cr)
-              <% elsif s.credits.positive? %>
-                <%= s.name %> (<%= s.credits %>cr)
-              <% else %>
-                <%= s.name %> (non-credit)
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
   </div>
+  <div class="binary-hero-right">
+    <p class="binary-eyebrow">Read your map</p>
+    <h1 class="binary-display">Every<br>credit, named.</h1>
+    <p class="binary-lede">
+      Below: every required subject, with your elective choices substituted into
+      the six slots. Anything unchosen is shown as such.
+    </p>
+  </div>
+</section>
 
-  <p class="nav-links"><%= link_to "← All plans", degree_plans_path %></p>
+<section class="binary-credline">
+  <span>APJ Abdul Kalam Technological University</span>
+  <span>B.Tech ECE</span>
+  <span><%= @plan.scheme %> Scheme</span>
+  <span><%= @subjects.where.not(kind: "elective_option").sum(:credits) %> credits</span>
+</section>
+
+<!-- BY SEMESTER -->
+<div class="binary-semesters">
+  <% @by_semester.each do |semester, subjects| %>
+    <% sem_credits = subjects.sum(&:credits) %>
+    <% inverted = semester.to_i.even? ? "inverted" : "" %>
+    <article class="binary-semester <%= inverted %>">
+      <div class="binary-semester-inner">
+        <header class="binary-semester-head">
+          <span class="binary-sem-num"><%= format("%02d", semester) %> /</span>
+          <h2 class="binary-sem-title">Semester <%= semester %></h2>
+          <span class="binary-sem-credits"><%= sem_credits %> credits</span>
+        </header>
+
+        <ol class="binary-subjects">
+          <% subjects.each_with_index do |s, i| %>
+            <li>
+              <span class="binary-row-num"><%= format("%02d", i + 1) %></span>
+              <div class="binary-row-body">
+                <% if s.kind == "elective_slot" %>
+                  <% chosen = @selections_by_group[s.elective_group]&.subject %>
+                  <span class="binary-row-name binary-pick">
+                    <span class="slot"><%= s.elective_group %>:</span>
+                    <% if chosen %>
+                      <span class="chosen"><%= chosen.name %></span>
+                    <% else %>
+                      <span class="unchosen">not chosen</span>
+                    <% end %>
+                  </span>
+                  <span class="binary-row-meta">Elective. <%= s.credits %> credits.</span>
+                <% else %>
+                  <span class="binary-row-name"><%= s.name %></span>
+                  <span class="binary-row-meta">
+                    <%= s.category_label %>.
+                    <% if s.credits.positive? %>
+                      <%= s.credits %> <%= s.credits == 1 ? "credit" : "credits" %>.
+                    <% else %>
+                      Non-credit.
+                    <% end %>
+                  </span>
+                <% end %>
+              </div>
+              <span class="binary-row-cr">
+                <%= s.credits.zero? ? "—" : "#{s.credits} cr" %>
+              </span>
+            </li>
+          <% end %>
+        </ol>
+      </div>
+    </article>
+  <% end %>
 </div>
+
+<footer class="binary-foot">
+  <%= link_to "← All plans", degree_plans_path %>
+  <span>End of plan</span>
+</footer>

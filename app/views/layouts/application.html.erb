@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Ece" %></title>
+    <title><%= content_for(:title) || "KTU ECE" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Ece">
@@ -18,18 +18,24 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
     <nav class="site-nav">
-      <%= link_to "KTU ECE", root_path, class: "brand" %>
+      <%= link_to "KTU / ECE", root_path, class: "brand" %>
       <div class="spacer"></div>
+      <%= link_to "Subjects", subjects_path %>
       <% if Current.user %>
-        <%= link_to "My plans", degree_plans_path %>
+        <%= link_to "Plans", degree_plans_path %>
         <span class="who"><%= Current.user.email_address %></span>
-        <%= button_to "Log out", session_path, method: :delete, class: "linklike" %>
+        <%= button_to "Sign out", session_path, method: :delete %>
       <% else %>
         <%= link_to "Sign in", new_session_path %>
         <%= link_to "Create account", sign_up_path %>

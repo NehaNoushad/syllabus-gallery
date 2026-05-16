@@ -1,25 +1,32 @@
-<% content_for :title, "Create degree plan" %>
+<% content_for :title, "New plan — KTU ECE" %>
 
-<div class="plans-page">
-  <h1>New plan</h1>
+<div class="binary-form-page">
+  <p class="binary-eyebrow">Begin</p>
+  <h1>New plan.</h1>
 
   <% if @plan.errors.any? %>
-    <ul class="errors">
-      <% @plan.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
+    <ul class="binary-errors">
+      <% @plan.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
     </ul>
   <% end %>
 
-  <%= form_with model: @plan, class: "plan-form" do |f| %>
-    <label>
-      Plan title
-      <%= f.text_field :title, required: true, autofocus: true %>
-    </label>
+  <%= form_with model: @plan, class: "binary-form" do |f| %>
+    <div class="binary-field">
+      <label class="binary-label" for="degree_plan_title">Plan title</label>
+      <%= f.text_field :title, id: "degree_plan_title", required: true, autofocus: true, class: "binary-input" %>
+      <span class="binary-hint">Give this plan a name — e.g. "My pick", "Robotics-leaning", "Conservative".</span>
+    </div>
+
     <%= f.hidden_field :branch %>
     <%= f.hidden_field :scheme %>
-    <p class="hint">Currently only the ECE 2019 scheme is supported.</p>
-    <div class="form-actions">
-      <%= f.submit "Create plan", class: "btn-primary" %>
-      <%= link_to "Cancel", degree_plans_path %>
+
+    <p class="binary-hint">Currently only ECE 2019 scheme is supported.</p>
+
+    <div class="binary-form-actions">
+      <%= f.submit "Create plan", class: "binary-btn" %>
+      <%= link_to "Cancel", degree_plans_path, class: "binary-link" %>
     </div>
   <% end %>
 </div>
