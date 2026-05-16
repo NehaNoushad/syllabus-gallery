@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  name: MyString
+  credits: 1
+  category: MyString
+  kind: MyString
+  semester: 1
+  elective_group: MyString
+  branch: MyString
+  scheme: MyString
+
+two:
+  code: MyString
+  name: MyString
+  credits: 1
+  category: MyString
+  kind: MyString
+  semester: 1
+  elective_group: MyString
+  branch: MyString
+  scheme: MyString
