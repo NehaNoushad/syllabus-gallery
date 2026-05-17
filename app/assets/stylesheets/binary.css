@@ -687,3 +687,167 @@ turbo-frame { display: block; }
 }
 .binary-pick .chosen { font-weight: 500; }
 .binary-pick .unchosen { font-weight: 300; opacity: 0.55; font-style: normal; }
+
+/* ===================================================================
+   MOBILE — phones ≤600px. Mobile-first rework: single-column reading,
+   shrunken paddings, ruled chapter marks tightened, no overflow.
+   Desktop above 600px is untouched.
+   =================================================================== */
+@media (max-width: 600px) {
+
+  /* ─── Top nav: brand on its own row, links wrap below ─── */
+  .site-nav {
+    flex-wrap: wrap;
+    padding: 12px 20px;
+    row-gap: 6px;
+    font-size: 10px;
+  }
+  .site-nav .brand { flex: 1 0 100%; font-size: 13px; }
+  .site-nav .spacer { display: none; }
+  .site-nav a { margin-left: 0; margin-right: 16px; }
+  .site-nav .who { display: none; }                   /* email hides on phone — would push links off */
+  .site-nav form { display: inline-flex; }
+  .site-nav form button { margin-left: 0; margin-right: 16px; font-size: inherit; }
+
+  /* ─── Flash ─── */
+  .flash-notice, .flash-alert { padding: 12px 20px; flex-wrap: wrap; gap: 10px; font-size: 12px; }
+
+  /* ─── Hero ─── */
+  .binary-hero { min-height: 0; }
+  .binary-hero-left, .binary-hero-right {
+    padding: 36px 20px;
+    min-height: 280px;
+  }
+  .binary-display {
+    font-size: clamp(40px, 11vw, 64px);
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+  }
+  .binary-lede { max-width: none; font-size: 13px; }
+  .binary-eyebrow { font-size: 10px; margin-bottom: 16px; }
+  .backlink, .uplink { font-size: 10px; }
+
+  /* ─── Credibility strip: vertical stack ─── */
+  .binary-credline {
+    flex-direction: column;
+    padding: 16px 20px;
+    gap: 6px;
+    font-size: 10px;
+  }
+  .binary-credline > span { white-space: normal; }
+
+  /* ─── Filter strip / search ─── */
+  .binary-filter { padding: 24px 20px 16px; }
+  .binary-search-label { font-size: 10px; }
+  .binary-search { font-size: 16px; padding: 6px 0; }   /* ≥16px prevents iOS focus-zoom */
+  .binary-results { font-size: 10px; }
+  .binary-chip { font-size: 10px; padding: 6px 10px; letter-spacing: 0.08em; }
+  .binary-chip-clear { margin-left: 8px; }
+
+  /* ─── Semester sections (subjects index) ─── */
+  .binary-semester {
+    padding: 40px 20px 32px;
+  }
+  .binary-semester::before {
+    top: 40px; bottom: 32px; left: 20px;
+    width: 3px;
+  }
+  .binary-semester-inner { padding-left: calc(3px + 16px); }
+  .binary-semester-head { gap: 14px; margin-bottom: 20px; padding-bottom: 10px; }
+  .binary-sem-num { font-size: 11px; }
+  .binary-sem-title { font-size: 22px; }
+  .binary-sem-credits { font-size: 10px; }
+  .binary-subjects li {
+    grid-template-columns: 36px 1fr auto;
+    padding: 11px 0;
+  }
+  .binary-row-num { font-size: 11px; }
+  .binary-row-name { font-size: 14px; }
+  .binary-row-meta { font-size: 11px; }
+  .binary-row-cr { font-size: 11px; }
+  .binary-row-name .code { font-size: 9px; margin-right: 7px; }
+
+  /* ─── Homepage 2×4 grid → single column already at 800px; tighten ─── */
+  .binary-grid { grid-template-columns: 1fr; }
+  .binary-card {
+    padding: 24px 20px 24px 40px;
+    border-right: 0;
+  }
+  .binary-card::before {
+    top: 24px; bottom: 24px; left: 16px;
+    width: 3px;
+  }
+  .binary-card-head { gap: 12px; margin-bottom: 12px; padding-bottom: 10px; }
+  .binary-card-num { font-size: 10px; }
+  .binary-card-title { font-size: 18px; }
+  .binary-card-credits { font-size: 10px; }
+  .binary-card-subjects li {
+    grid-template-columns: 24px 1fr auto;
+    padding: 7px 0;
+  }
+  .binary-card-subjects .name { font-size: 12px; }
+  .binary-card-subjects .code { font-size: 8px; margin-right: 6px; }
+  .binary-card-subjects .cr { font-size: 10px; }
+
+  /* ─── By category table: stack to 2 rows per item (bar on row 2) ─── */
+  .binary-cat-overview { padding: 40px 20px 32px; }
+  .binary-cat-overview::before {
+    top: 40px; bottom: 32px; left: 20px;
+    width: 3px;
+  }
+  .binary-cat-inner { padding-left: calc(3px + 16px); }
+  .binary-cat-table li {
+    grid-template-columns: 36px 1fr auto;
+    grid-template-areas:
+      "num name cr"
+      ".   bar  bar";
+    column-gap: 14px;
+    row-gap: 8px;
+    padding: 14px 0;
+  }
+  .binary-cat-num  { grid-area: num; font-size: 11px; }
+  .binary-cat-name { grid-area: name; font-size: 14px; }
+  .binary-cat-bar  { grid-area: bar; height: 4px; width: 100%; }
+  .binary-cat-cr   { grid-area: cr; font-size: 11px; }
+
+  /* ─── Plans index ─── */
+  .binary-plans-page { padding: 40px 20px; }
+  .binary-plans-page > header { padding-bottom: 12px; margin-bottom: 22px; }
+  .binary-plans-page > header h1 { font-size: clamp(32px, 11vw, 56px); }
+  .binary-plans-list li {
+    grid-template-columns: 36px 1fr;
+    grid-template-areas:
+      "num  name"
+      ".    meta";
+    row-gap: 4px;
+    column-gap: 14px;
+    padding: 14px 0;
+  }
+  .binary-plans-list .num  { grid-area: num; font-size: 11px; }
+  .binary-plans-list .name { grid-area: name; font-size: 17px; }
+  .binary-plans-list .meta { grid-area: meta; font-size: 10px; }
+
+  /* ─── Forms (auth, plan new, plan edit) ─── */
+  .binary-form-page { padding: 40px 20px; }
+  .binary-form-page > h1 { font-size: clamp(36px, 12vw, 56px); }
+  .binary-form { gap: 22px; }
+  .binary-form input[type="text"],
+  .binary-form input[type="email"],
+  .binary-form input[type="password"],
+  .binary-input { font-size: 16px; }                  /* ≥16px prevents iOS focus-zoom */
+  .binary-form-actions { flex-wrap: wrap; row-gap: 12px; }
+  .binary-btn { padding: 14px 20px; font-size: 11px; }
+  .binary-link { font-size: 10px; }
+  .binary-hint { font-size: 11px; }
+
+  /* ─── Empty state, footer ─── */
+  .binary-empty { padding: 60px 20px; font-size: 12px; }
+  .binary-foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 28px 20px;
+    font-size: 10px;
+  }
+}
+
