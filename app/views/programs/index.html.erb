@@ -31,42 +31,13 @@
         <span class="binary-card-credits"><%= program.scheme %></span>
       </header>
 
-      <p style="font-size: 13px; font-weight: 300; line-height: 1.55; margin: 0 0 18px;">
-        <%= program.description %>
+      <p class="binary-card-tagline"><%= program.tagline %></p>
+
+      <p class="binary-card-meta">
+        <%= program.total_semesters %> sem · <%= program.total_credits %> cr · <%= program.total_electives_count %> electives · <%= program.branch_code %>
       </p>
 
-      <ul class="binary-card-subjects" style="margin-bottom: 18px;">
-        <li>
-          <span class="num">01</span>
-          <span class="name"><span class="code">University</span><%= program.university %></span>
-          <span class="cr">—</span>
-        </li>
-        <li>
-          <span class="num">02</span>
-          <span class="name"><span class="code">Branch</span><%= program.short %> (<%= program.branch_code %>) · <%= program.group %></span>
-          <span class="cr">—</span>
-        </li>
-        <li>
-          <span class="num">03</span>
-          <span class="name"><span class="code">Scheme</span><%= program.scheme %></span>
-          <span class="cr">—</span>
-        </li>
-        <li>
-          <span class="num">04</span>
-          <span class="name"><span class="code">Subjects</span><%= program.total_subjects_count %> across <%= program.total_semesters %> semesters</span>
-          <span class="cr"><%= program.total_credits %> cr</span>
-        </li>
-        <li>
-          <span class="num">05</span>
-          <span class="name"><span class="code">Electives</span><%= program.total_electives_count %> options across the elective baskets</span>
-          <span class="cr">—</span>
-        </li>
-      </ul>
-
-      <div style="display: flex; gap: 14px;">
-        <%= link_to "Read curriculum →", program_path(program.slug), class: "binary-btn" %>
-        <%= link_to "Subject catalog", program_subjects_path(program.slug), class: "binary-link" %>
-      </div>
+      <%= link_to "Read curriculum →", program_path(program.slug), class: "binary-btn" %>
     </article>
   <% end %>
 
