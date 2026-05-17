@@ -99,6 +99,47 @@ turbo-frame { display: block; }
 .flash-alert  { background: var(--ink); color: var(--paper); }
 .flash-alert::before { content: "ALERT"; border-right-color: var(--paper); }
 
+/* ─────────────────────── BREADCRUMBS ───────────────────────
+   Notion-style trail directly below the nav. Hidden on the dashboard
+   (the helper returns an empty array there). */
+.breadcrumbs {
+  background: var(--paper);
+  border-bottom: 1px solid var(--ink);
+  padding: 10px 48px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.breadcrumbs ol {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap;
+  align-items: baseline;
+  row-gap: 4px;
+}
+.breadcrumbs li { display: inline-flex; align-items: baseline; }
+.breadcrumbs li + li::before {
+  content: "/";
+  margin: 0 12px;
+  opacity: 0.35;
+  font-weight: 400;
+}
+.breadcrumbs a {
+  color: var(--ink);
+  opacity: 0.55;
+  padding-bottom: 1px;
+  border-bottom: 1px solid transparent;
+}
+.breadcrumbs a:hover {
+  opacity: 1;
+  border-bottom-color: var(--ink);
+}
+.breadcrumbs [aria-current="page"] {
+  font-weight: 700;
+}
+
 /* ─────────────────────── HERO ─────────────────────── */
 .binary-hero {
   display: grid;
@@ -711,6 +752,10 @@ turbo-frame { display: block; }
 
   /* ─── Flash ─── */
   .flash-notice, .flash-alert { padding: 12px 20px; flex-wrap: wrap; gap: 10px; font-size: 12px; }
+
+  /* ─── Breadcrumbs ─── */
+  .breadcrumbs { padding: 8px 20px; font-size: 9px; letter-spacing: 0.08em; }
+  .breadcrumbs li + li::before { margin: 0 8px; }
 
   /* ─── Hero ─── */
   .binary-hero { min-height: 0; }

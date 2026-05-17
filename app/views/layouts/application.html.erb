@@ -42,6 +42,22 @@
       <% end %>
     </nav>
 
+    <% if (trail = breadcrumb_trail).any? %>
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol>
+          <% trail.each_with_index do |c, i| %>
+            <li>
+              <% if c.path && i < trail.size - 1 %>
+                <%= link_to c.label, c.path %>
+              <% else %>
+                <span aria-current="page"><%= c.label %></span>
+              <% end %>
+            </li>
+          <% end %>
+        </ol>
+      </nav>
+    <% end %>
+
     <% if notice = flash[:notice] %>
       <div class="flash-notice"><%= notice %></div>
     <% end %>
