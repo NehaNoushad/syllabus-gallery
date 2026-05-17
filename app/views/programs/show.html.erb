@@ -1,4 +1,4 @@
-<% content_for :title, "KTU ECE — Curriculum" %>
+<% content_for :title, "#{@program.title} #{@program.scheme}" %>
 
 <%
   categories_with_credits = @total_credits_by_category.reject { |_, cr| cr.zero? }
@@ -8,16 +8,18 @@
 <!-- HERO -->
 <section class="binary-hero">
   <div class="binary-hero-left">
-    <p class="binary-eyebrow">KTU · B.Tech · 2019 Scheme</p>
-    <h1 class="binary-display">The<br>curriculum</h1>
+    <p class="binary-eyebrow"><%= @program.university %> · <%= @program.degree %> · <%= @program.scheme %> Scheme</p>
+    <h1 class="binary-display"><%= @program.short %><br>curriculum</h1>
     <p class="binary-lede">
-      The shape of an Electronics &amp; Computer Engineering degree, presented
-      as it is intended to be read. Eight semesters. Sixty subjects. No commentary.
+      <%= @program.description %>
     </p>
-    <%= link_to "Browse the catalog →", subjects_path, class: "backlink" %>
+    <div style="display: flex; gap: 16px; align-items: baseline; margin-top: 8px;">
+      <%= link_to "Subject catalog →", program_subjects_path(@program.slug), class: "binary-btn" %>
+      <%= link_to "← All syllabuses", programs_path, class: "binary-link" %>
+    </div>
   </div>
   <div class="binary-hero-right">
-    <p class="binary-eyebrow">Read the structure</p>
+    <p class="binary-eyebrow"><%= @program.tagline %></p>
     <h1 class="binary-display">Every credit<br>accounted for</h1>
     <p class="binary-lede">
       Mathematics, science, core engineering, software, labs, electives, project.
@@ -28,14 +30,14 @@
 
 <!-- CREDIBILITY -->
 <section class="binary-credline">
-  <span>APJ Abdul Kalam Technological University</span>
-  <span>B.Tech Electronics &amp; Computer Engineering</span>
-  <span>2019 Scheme</span>
+  <span><%= @program.university %></span>
+  <span><%= @program.degree %> <%= @program.name %></span>
+  <span><%= @program.scheme %> Scheme</span>
   <span><%= @total_credits %> mandatory credits</span>
-  <span>8 semesters</span>
+  <span><%= @by_semester.size %> semesters</span>
 </section>
 
-<!-- 2 × 4 SEMESTER GRID — entire degree visible at a glance -->
+<!-- 2 × 4 SEMESTER GRID -->
 <section class="binary-grid">
   <% @by_semester.each do |semester, subjects| %>
     <% sem_credits = subjects.sum(&:credits) %>
@@ -61,7 +63,7 @@
   <% end %>
 </section>
 
-<!-- BY CATEGORY OVERVIEW — the bottom summary, like v1 -->
+<!-- BY CATEGORY OVERVIEW -->
 <section class="binary-cat-overview inverted">
   <div class="binary-cat-inner">
     <header class="binary-semester-head">
@@ -84,6 +86,6 @@
 </section>
 
 <footer class="binary-foot">
-  <span>End of curriculum</span>
+  <%= link_to "← All syllabuses", programs_path %>
   <span><%= @total_credits %> credits total</span>
 </footer>

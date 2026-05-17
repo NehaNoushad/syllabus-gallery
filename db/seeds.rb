@@ -1,8 +1,8 @@
-# Seeds the KTU B.Tech ECE 2019-scheme curriculum.
-# Source: KTU 2019 ECE syllabus per Neha's authoritative reference (2026-05-17).
-# Re-runnable: clears existing ECE-2019 subjects first.
+# Seeds the KTU B.Tech ECE 2024-scheme curriculum.
+# Source: KTU ECE syllabus per Neha's authoritative reference (2026-05-17).
+# Re-runnable: clears existing ECE-2024 subjects first.
 
-Subject.where(branch: "ECE", scheme: "2019").delete_all
+Subject.where(branch: "ECE", scheme: "2024").delete_all
 
 SUBJECTS = [
   # ───── Semester 1 (17 cr) ─────
@@ -98,7 +98,7 @@ SUBJECTS.each do |row|
     semester:       row[:sem],
     elective_group: row[:group],
     branch:         "ECE",
-    scheme:         "2019"
+    scheme:         "2024"
   )
 end
 
@@ -163,7 +163,7 @@ ELECTIVE_OPTIONS.each do |group, names|
       semester:       nil,
       elective_group: group,
       branch:         "ECE",
-      scheme:         "2019"
+      scheme:         "2024"
     )
   end
 end

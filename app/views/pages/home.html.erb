@@ -1,0 +1,62 @@
+<% content_for :title, "Syllabus directory" %>
+
+<!-- DASHBOARD HERO -->
+<section class="binary-hero">
+  <div class="binary-hero-left">
+    <p class="binary-eyebrow">Syllabus directory</p>
+    <h1 class="binary-display">Find your<br>syllabus.</h1>
+    <p class="binary-lede">
+      A directory of university curricula, presented as serious documents —
+      not marketing brochures. Pick a program. Read it like a textbook.
+    </p>
+    <%= link_to "Browse syllabuses →", programs_path, class: "binary-btn", style: "margin-top: 10px;" %>
+  </div>
+  <div class="binary-hero-right">
+    <p class="binary-eyebrow">No ornament</p>
+    <h1 class="binary-display">Numbered.<br>Ordered.<br>Complete.</h1>
+    <p class="binary-lede">
+      Every credit accounted for. Every elective named. No commentary on whether
+      a subject is "interesting" — only the structure as it is intended to be taught.
+    </p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS — credibility-strip style -->
+<section class="binary-credline">
+  <span>1 — Pick a program</span>
+  <span>2 — Read the curriculum</span>
+  <span>3 — Save your elective plan</span>
+</section>
+
+<!-- AVAILABLE PROGRAMS preview -->
+<section class="binary-cat-overview">
+  <div class="binary-cat-inner">
+    <header class="binary-semester-head">
+      <span class="binary-sem-num">01 /</span>
+      <h2 class="binary-sem-title">Available syllabuses</h2>
+      <span class="binary-sem-credits"><%= @programs.size %> in directory</span>
+    </header>
+
+    <ol class="binary-plans-list" style="margin: 0;">
+      <% @programs.each_with_index do |program, i| %>
+        <li>
+          <span class="num"><%= format("%02d", i + 1) %></span>
+          <%= link_to program.title, program_path(program.slug), class: "name" %>
+          <span class="meta">
+            <%= program.scheme %> Scheme · <%= program.total_credits %> cr · <%= program.total_semesters %> semesters
+          </span>
+        </li>
+      <% end %>
+    </ol>
+
+    <p class="binary-hint" style="margin-top: 24px;">
+      More programs will appear here as their syllabus data is added.
+      <%= link_to "Open the full directory →", programs_path, class: "binary-link", style: "margin-left: 8px;" %>
+    </p>
+  </div>
+</section>
+
+<footer class="binary-foot">
+  <span>End of dashboard</span>
+  <span><%= @programs.size %> program<%= "s" unless @programs.size == 1 %> available</span>
+</footer>

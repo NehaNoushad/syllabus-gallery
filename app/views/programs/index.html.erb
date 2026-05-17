@@ -1,0 +1,87 @@
+<% content_for :title, "All syllabuses" %>
+
+<section class="binary-hero">
+  <div class="binary-hero-left">
+    <p class="binary-eyebrow">Directory</p>
+    <h1 class="binary-display">All<br>syllabuses.</h1>
+    <p class="binary-lede">
+      Pick a program to read its complete curriculum — every semester, every
+      subject, every credit. Use the catalog within a program to search and
+      filter; create a plan to save your elective picks.
+    </p>
+    <%= link_to "← Back to dashboard", root_path, class: "backlink" %>
+  </div>
+  <div class="binary-hero-right">
+    <p class="binary-eyebrow"><%= @programs.size %> in directory</p>
+    <h1 class="binary-display">Read them<br>side by side.</h1>
+    <p class="binary-lede">
+      Compare structure, pacing, electives. Every program follows the same
+      typographic skeleton so you can compare them line for line.
+    </p>
+  </div>
+</section>
+
+<!-- PROGRAMS GRID -->
+<section class="binary-grid">
+  <% @programs.each do |program| %>
+    <article class="binary-card">
+      <header class="binary-card-head">
+        <span class="binary-card-num"><%= program.short %></span>
+        <h2 class="binary-card-title"><%= program.title %></h2>
+        <span class="binary-card-credits"><%= program.scheme %></span>
+      </header>
+
+      <p style="font-size: 13px; font-weight: 300; line-height: 1.55; margin: 0 0 18px;">
+        <%= program.description %>
+      </p>
+
+      <ul class="binary-card-subjects" style="margin-bottom: 18px;">
+        <li>
+          <span class="num">01</span>
+          <span class="name"><span class="code">University</span><%= program.university %></span>
+          <span class="cr">—</span>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <span class="name"><span class="code">Branch</span><%= program.short %> (<%= program.branch_code %>) · <%= program.group %></span>
+          <span class="cr">—</span>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <span class="name"><span class="code">Scheme</span><%= program.scheme %></span>
+          <span class="cr">—</span>
+        </li>
+        <li>
+          <span class="num">04</span>
+          <span class="name"><span class="code">Subjects</span><%= program.total_subjects_count %> across <%= program.total_semesters %> semesters</span>
+          <span class="cr"><%= program.total_credits %> cr</span>
+        </li>
+        <li>
+          <span class="num">05</span>
+          <span class="name"><span class="code">Electives</span><%= program.total_electives_count %> options across the elective baskets</span>
+          <span class="cr">—</span>
+        </li>
+      </ul>
+
+      <div style="display: flex; gap: 14px;">
+        <%= link_to "Read curriculum →", program_path(program.slug), class: "binary-btn" %>
+        <%= link_to "Subject catalog", program_subjects_path(program.slug), class: "binary-link" %>
+      </div>
+    </article>
+  <% end %>
+
+  <% if @programs.size.odd? %>
+    <article class="binary-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+      <p class="binary-eyebrow" style="margin-bottom: 8px;">More coming</p>
+      <h2 class="binary-card-title" style="margin-bottom: 8px;">A second syllabus.</h2>
+      <p class="binary-hint" style="max-width: 30ch;">
+        Another program will land here as soon as its syllabus data is in.
+      </p>
+    </article>
+  <% end %>
+</section>
+
+<footer class="binary-foot">
+  <%= link_to "← Back to dashboard", root_path %>
+  <span>End of directory</span>
+</footer>

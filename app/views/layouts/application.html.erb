@@ -29,9 +29,9 @@
 
   <body>
     <nav class="site-nav">
-      <%= link_to "KTU / ECE", root_path, class: "brand" %>
+      <%= link_to "Syllabus / Directory", root_path, class: "brand" %>
       <div class="spacer"></div>
-      <%= link_to "Subjects", subjects_path %>
+      <%= link_to "Syllabuses", programs_path %>
       <% if Current.user %>
         <%= link_to "Plans", degree_plans_path %>
         <span class="who"><%= Current.user.email_address %></span>

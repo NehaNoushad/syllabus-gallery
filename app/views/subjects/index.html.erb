@@ -1,17 +1,17 @@
-<% content_for :title, "Subjects — KTU ECE" %>
+<% content_for :title, "#{@program.short} Subjects" %>
 
 <% total_credits = @subjects_by_semester.values.flatten.sum(&:credits) %>
 
   <!-- HERO ─ hard split: open notebook (left) / authority of print (right) -->
   <section class="binary-hero">
     <div class="binary-hero-left">
-      <p class="binary-eyebrow">KTU · B.Tech · 2019 Scheme</p>
-      <h1 class="binary-display">Subjects</h1>
+      <p class="binary-eyebrow"><%= @program.university %> · <%= @program.degree %> · <%= @program.scheme %> Scheme</p>
+      <h1 class="binary-display"><%= @program.short %><br>Subjects</h1>
       <p class="binary-lede">
-        A complete catalog of the Electronics &amp; Computer Engineering curriculum —
+        A complete catalog of the <%= @program.name %> curriculum —
         every subject, every semester, every credit. No commentary.
       </p>
-      <%= link_to "← Index — credit breakdown", root_path, class: "backlink" %>
+      <%= link_to "← #{@program.short} curriculum", program_path(@program.slug), class: "backlink" %>
     </div>
     <div class="binary-hero-right">
       <p class="binary-eyebrow">Catalog</p>
@@ -24,23 +24,19 @@
 
   <!-- CREDIBILITY STRIP -->
   <section class="binary-credline">
-    <span>APJ Abdul Kalam Technological University</span>
-    <span>B.Tech Electronics &amp; Computer Engineering</span>
-    <span>2019 Scheme</span>
-    <span>162 mandatory credits</span>
-    <span>8 semesters</span>
+    <span><%= @program.university %></span>
+    <span><%= @program.degree %> <%= @program.name %></span>
+    <span><%= @program.scheme %> Scheme</span>
+    <span><%= @program.total_credits %> mandatory credits</span>
+    <span><%= @program.total_semesters %> semesters</span>
   </section>
 
   <!-- FILTER + RESULTS share a Turbo Frame so chip/search clicks update
-       inline (no full-page navigation, no scroll-to-top).
-       We deliberately do NOT use data-turbo-action="advance" because that
-       promotes the frame nav to a page advance, which scrolls to top.
-       The little script at the bottom of this view updates the browser URL
-       via history.replaceState so the filter state is still shareable. -->
+       inline (no full-page navigation, no scroll-to-top). -->
   <%= turbo_frame_tag "catalog" do %>
 
     <section class="binary-filter">
-      <%= form_with url: subjects_path, method: :get do |f| %>
+      <%= form_with url: program_subjects_path(@program.slug), method: :get do |f| %>
         <div class="binary-filter-row">
           <div>
             <label class="binary-search-label" for="binary-q">Search</label>
@@ -59,14 +55,14 @@
         </div>
 
         <div class="binary-chips">
-          <%= link_to "All", subjects_path(q: @query.presence),
+          <%= link_to "All", program_subjects_path(@program.slug, q: @query.presence),
                       class: "binary-chip #{'binary-chip-active' unless @category}" %>
           <% Subject::CATEGORY_LABELS.each do |key, label| %>
-            <%= link_to label, subjects_path(q: @query.presence, category: key),
+            <%= link_to label, program_subjects_path(@program.slug, q: @query.presence, category: key),
                         class: "binary-chip #{'binary-chip-active' if @category == key}" %>
           <% end %>
           <% if @query.present? || @category %>
-            <%= link_to "Clear", subjects_path, class: "binary-chip binary-chip-clear" %>
+            <%= link_to "Clear", program_subjects_path(@program.slug), class: "binary-chip binary-chip-clear" %>
           <% end %>
         </div>
       <% end %>
@@ -125,31 +121,20 @@
   <% end %>
 
   <script>
-    // Two jobs:
-    //  1. Preserve scroll position across catalog frame navigations.
-    //     Turbo Frames scroll the new frame top into view by default, which
-    //     yanks the page up to ~351px (frame top) every time you tap a chip.
-    //     We snapshot scrollY before the fetch, then restore it on load.
-    //  2. Reflect the new frame URL in the address bar so the active filter
-    //     state is shareable / bookmarkable, without pushing history.
     (function () {
       var pendingScrollY = null;
-
       document.addEventListener("turbo:before-fetch-request", function (event) {
         if (event.target && event.target.id === "catalog") {
           pendingScrollY = window.scrollY;
         }
       });
-
       document.addEventListener("turbo:frame-load", function (event) {
         var frame = event.target;
         if (frame.id !== "catalog") return;
-
         if (pendingScrollY !== null) {
           window.scrollTo(0, pendingScrollY);
           pendingScrollY = null;
         }
-
         if (frame.src) {
           var u = new URL(frame.src, window.location.origin);
           window.history.replaceState(null, "", u.pathname + u.search);

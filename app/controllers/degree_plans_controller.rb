@@ -7,7 +7,7 @@ class DegreePlansController < ApplicationController
   end
 
   def new
-    @plan = Current.user.degree_plans.build(branch: "ECE", scheme: "2019", title: "My Degree Plan")
+    @plan = Current.user.degree_plans.build(branch: "ECE", scheme: "2024", title: "My Degree Plan")
   end
 
   def create
