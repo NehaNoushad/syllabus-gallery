@@ -158,6 +158,42 @@ turbo-frame { display: block; }
 .binary-hero-left { background: var(--paper); color: var(--ink); }
 .binary-hero-right { background: var(--ink); color: var(--paper); position: relative; }
 
+/* Optional photographic backdrop on a hero panel.
+   Apply class .has-image and pass an Unsplash (or other) image URL via the
+   --bg CSS custom property. The filter forces pure B&W and darkens the
+   image so overlay text stays legible — fidelity to the binary palette
+   is preserved regardless of source tint. */
+.binary-hero-right.has-image,
+.binary-hero-left.has-image {
+  isolation: isolate;
+  overflow: hidden;
+}
+.binary-hero-right.has-image::before,
+.binary-hero-left.has-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--ink);
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(1) contrast(1.05) brightness(0.4);
+  z-index: -1;
+}
+/* Photo credit at the corner of an image panel — very small, very faint. */
+.binary-photo-credit {
+  position: absolute;
+  bottom: 14px; right: 16px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 400;
+  opacity: 0.35;
+  color: var(--paper);
+  margin: 0;
+}
+
 .binary-eyebrow {
   font-size: 11px;
   font-weight: 500;
