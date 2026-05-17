@@ -13,10 +13,7 @@
     <p class="binary-lede">
       <%= @program.description %>
     </p>
-    <div style="display: flex; gap: 16px; align-items: baseline; margin-top: 8px;">
-      <%= link_to "Subject catalog →", program_subjects_path(@program.slug), class: "binary-btn" %>
-      <%= link_to "← All syllabuses", programs_path, class: "binary-link" %>
-    </div>
+    <%= link_to "Subject catalog →", program_subjects_path(@program.slug), class: "binary-btn", style: "margin-top: 8px;" %>
   </div>
   <div class="binary-hero-right">
     <p class="binary-eyebrow"><%= @program.tagline %></p>
