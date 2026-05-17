@@ -2,6 +2,10 @@ module Authentication
   extend ActiveSupport::Concern
 
   included do
+    # resume_session ALWAYS runs so public pages can still know who the
+    # visitor is. require_authentication is what enforces login and can be
+    # skipped per-controller via `allow_unauthenticated_access`.
+    before_action :resume_session
     before_action :require_authentication
     helper_method :authenticated?
   end
@@ -14,11 +18,11 @@ module Authentication
 
   private
     def authenticated?
-      resume_session
+      Current.session.present?
     end
 
     def require_authentication
-      resume_session || request_authentication
+      Current.session.present? || request_authentication
     end
 
     def resume_session

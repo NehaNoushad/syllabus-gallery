@@ -604,6 +604,116 @@ turbo-frame { display: block; }
 .binary-cat-overview.inverted .binary-semester-head { border-bottom-color: var(--paper); }
 .binary-cat-overview.inverted .binary-cat-bar  { background: var(--paper); }
 
+/* ─────────────────────── ANNOUNCEMENTS (dashboard) ───────────────────────
+   Sits inside .binary-cat-overview.inverted so it inherits black bg +
+   white ink. Styles below override input/button colors for legibility. */
+.binary-announce-form {
+  display: flex; flex-direction: column;
+  gap: 14px;
+  margin: 8px 0 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--paper);
+}
+.binary-cat-overview.inverted .binary-announce-form .binary-input {
+  color: var(--paper);
+  border-bottom-color: var(--paper);
+  font-size: 14px;
+}
+.binary-cat-overview.inverted .binary-announce-form .binary-input::placeholder {
+  color: var(--paper);
+  opacity: 0.4;
+}
+.binary-textarea {
+  resize: vertical;
+  border: 1px solid currentColor !important;
+  padding: 10px 12px !important;
+  font-family: inherit;
+  line-height: 1.5;
+  background: transparent;
+}
+.binary-cat-overview.inverted .binary-textarea {
+  background: transparent;
+}
+.binary-btn-inverted {
+  align-self: flex-start;
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
+}
+.binary-btn-inverted:hover {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--paper);
+}
+
+.binary-announce-list {
+  list-style: none; padding: 0; margin: 0;
+}
+.binary-announce-list li {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  column-gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--paper);
+  align-items: start;
+}
+.binary-announce-list li:last-child { border-bottom: 0; }
+.binary-announce-list .num {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+}
+.binary-announce-list .body { display: flex; flex-direction: column; gap: 4px; }
+.binary-announce-list .head {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px;
+}
+.binary-announce-list .title {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700; font-size: 15px; letter-spacing: -0.01em;
+}
+.binary-announce-list .time {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  opacity: 0.55;
+}
+.binary-announce-list .content {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.binary-announce-list .content p { margin: 0 0 4px; }
+.binary-announce-list li > form { margin: 0; display: contents; }
+.binary-announce-remove {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  opacity: 0.4;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  padding: 2px 0;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: inherit;
+  align-self: start;
+  justify-self: end;
+}
+.binary-announce-remove:hover { opacity: 1; }
+
+@media (max-width: 600px) {
+  .binary-announce-list li {
+    grid-template-columns: 30px 1fr;
+    grid-template-areas:
+      "num body"
+      ".   rm";
+  }
+  .binary-announce-list .num  { grid-area: num; }
+  .binary-announce-list .body { grid-area: body; }
+  .binary-announce-remove     { grid-area: rm; justify-self: start; margin-top: 6px; }
+}
+
 /* ─────────────────────── FORM PAGES (auth, plans/new) ─────────────────────── */
 .binary-form-page {
   padding: 64px 48px;
