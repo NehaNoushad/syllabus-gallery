@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_17_191621) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_17_195737) do
+  create_table "articles", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.text "excerpt"
+    t.string "kind"
+    t.datetime "published_at"
+    t.string "slug"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["published_at"], name: "index_articles_on_published_at"
+    t.index ["slug"], name: "index_articles_on_slug", unique: true
+    t.index ["user_id"], name: "index_articles_on_user_id"
+  end
+
   create_table "degree_plans", force: :cascade do |t|
     t.string "branch"
     t.datetime "created_at", null: false
@@ -56,6 +71,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_17_191621) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.string "email_address", null: false
     t.string "password_digest", null: false
@@ -63,6 +79,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_17_191621) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "articles", "users"
   add_foreign_key "degree_plans", "users"
   add_foreign_key "plan_selections", "degree_plans"
   add_foreign_key "plan_selections", "subjects"

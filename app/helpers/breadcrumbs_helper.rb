@@ -34,6 +34,21 @@ module BreadcrumbsHelper
        Crumb.new(@plan.title, @plan),
        Crumb.new("Edit", nil)]
 
+    when "articles#index"
+      [Crumb.new("Workshop", nil)]
+    when "articles#show"
+      [Crumb.new("Workshop", articles_path),
+       Crumb.new(@article.title, nil)]
+
+    when "admin/articles#index"
+      [Crumb.new("Admin", nil)]
+    when "admin/articles#new", "admin/articles#create"
+      [Crumb.new("Admin", admin_articles_path),
+       Crumb.new("New article", nil)]
+    when "admin/articles#edit", "admin/articles#update"
+      [Crumb.new("Admin", admin_articles_path),
+       Crumb.new(@article.title, nil)]
+
     when "sessions#new", "sessions#create"
       [Crumb.new("Sign in", nil)]
     when "registrations#new", "registrations#create"

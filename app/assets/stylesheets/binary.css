@@ -732,6 +732,169 @@ turbo-frame { display: block; }
   opacity: 0.65;
 }
 
+/* ─────────────────────── ARTICLES (The Workshop) ───────────────────────
+   Card layout for the blog section on the dashboard + /articles index.
+   Each card is a link wrapping a black-on-white block with a pill,
+   title, excerpt, and a small foot row. Hover inverts via the same
+   custom-property swap used on .binary-card. */
+.binary-articles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--ink);
+  border-left: 1px solid var(--ink);
+}
+@media (max-width: 800px) { .binary-articles { grid-template-columns: 1fr; } }
+
+.binary-article-card {
+  display: flex; flex-direction: column;
+  padding: 32px 28px 24px;
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  transition: background 0.15s ease, color 0.15s ease;
+  min-height: 240px;
+}
+.binary-article-card:hover {
+  --ink: #fff;
+  --paper: #000;
+  background: #000;
+  color: #fff;
+}
+
+.binary-article-pill {
+  display: inline-block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border: 1px solid currentColor;
+  align-self: flex-start;
+  margin-bottom: 22px;
+}
+
+.binary-article-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin: 0 0 12px;
+}
+
+.binary-article-excerpt {
+  font-size: 13.5px;
+  font-weight: 300;
+  line-height: 1.55;
+  margin: 0 0 auto;
+}
+
+.binary-article-foot {
+  display: flex; justify-content: space-between;
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid currentColor;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* /articles index page */
+.binary-articles-page {
+  padding: 0 48px 48px;
+}
+.binary-articles-page .binary-articles {
+  max-width: var(--max);
+  margin: 48px auto 0;
+}
+
+/* /articles/:slug — long-read */
+.binary-article-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 64px 32px;
+}
+.binary-article-page-head { margin-bottom: 48px; }
+.binary-article-page-meta {
+  display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline;
+  margin-bottom: 28px;
+}
+.binary-article-date {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.6;
+}
+.binary-article-draft {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  padding: 4px 8px;
+  border: 1px solid currentColor;
+}
+.binary-article-page-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin: 0 0 18px;
+  font-weight: 700;
+}
+.binary-article-page-excerpt {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.55;
+  opacity: 0.7;
+  margin: 0;
+}
+.binary-article-page-body {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  border-top: 1px solid var(--ink);
+  padding-top: 32px;
+}
+.binary-article-page-body p { margin: 0 0 18px; }
+.binary-article-page-foot {
+  display: flex; justify-content: space-between;
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ink);
+  flex-wrap: wrap; gap: 14px;
+}
+
+/* Multi-line textarea variant for admin article form. .binary-input is
+   border-bottom-only by default; we need a full bordered box for body
+   copy with proper padding so the writer has somewhere to look. */
+.binary-textarea-light {
+  border: 1px solid var(--ink) !important;
+  padding: 10px 14px !important;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.55;
+  background: var(--paper);
+  resize: vertical;
+}
+
+@media (max-width: 600px) {
+  .binary-article-card { padding: 24px 20px 20px; min-height: 200px; }
+  .binary-article-title { font-size: 19px; }
+  .binary-article-pill { font-size: 9px; padding: 4px 9px; margin-bottom: 16px; }
+  .binary-article-page { padding: 32px 20px; }
+  .binary-article-page-head { margin-bottom: 32px; }
+  .binary-article-page-body { font-size: 15px; }
+  .binary-articles-page { padding: 0 20px 32px; }
+}
+
 /* ─────────────────────── PLANS INDEX ─────────────────────── */
 .binary-plans-page {
   padding: 64px 48px;

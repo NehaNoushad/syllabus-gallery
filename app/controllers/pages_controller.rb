@@ -3,5 +3,6 @@ class PagesController < ApplicationController
 
   def home
     @programs = Program.all
+    @articles = Article.published.limit(6)
   end
 end

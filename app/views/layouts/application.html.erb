@@ -32,8 +32,12 @@
       <%= link_to "Syllabus / Directory", root_path, class: "brand" %>
       <div class="spacer"></div>
       <%= link_to "Syllabuses", programs_path %>
+      <%= link_to "Workshop", articles_path %>
       <% if Current.user %>
         <%= link_to "Plans", degree_plans_path %>
+        <% if Current.user.admin? %>
+          <%= link_to "Admin", admin_articles_path %>
+        <% end %>
         <span class="who"><%= Current.user.email_address %></span>
         <%= button_to "Sign out", session_path, method: :delete %>
       <% else %>

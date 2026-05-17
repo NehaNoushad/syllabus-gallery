@@ -1,0 +1,15 @@
+<% content_for :title, "Admin · Edit #{@article.title}" %>
+
+<div class="binary-form-page">
+  <p class="binary-eyebrow">Admin · editing</p>
+  <h1><%= @article.title %></h1>
+  <p class="binary-hint" style="margin-bottom: 20px;">
+    <% if @article.published? %>
+      Currently <strong>published</strong> · public URL:
+      <%= link_to "/articles/#{@article.slug}", article_path(@article), class: "binary-link" %>
+    <% else %>
+      Currently a <strong>draft</strong>. Not visible on the dashboard or via the public URL.
+    <% end %>
+  </p>
+  <%= render "form" %>
+</div>

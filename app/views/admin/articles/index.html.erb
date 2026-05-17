@@ -1,0 +1,34 @@
+<% content_for :title, "Admin · Articles" %>
+
+<div class="binary-plans-page">
+  <header>
+    <div>
+      <p class="binary-eyebrow">Admin</p>
+      <h1>Articles.</h1>
+    </div>
+    <%= link_to "New article", new_admin_article_path, class: "binary-btn" %>
+  </header>
+
+  <% if @articles.any? %>
+    <ol class="binary-plans-list">
+      <% @articles.each_with_index do |a, i| %>
+        <li>
+          <span class="num"><%= format("%02d", i + 1) %></span>
+          <%= link_to a.title, edit_admin_article_path(a), class: "name" %>
+          <span class="meta">
+            <%= a.kind_label %> ·
+            <% if a.published? %>
+              PUBLISHED <%= a.published_at.strftime("%Y-%m-%d") %>
+            <% else %>
+              DRAFT
+            <% end %>
+          </span>
+        </li>
+      <% end %>
+    </ol>
+  <% else %>
+    <p class="binary-lede" style="max-width: 60ch;">
+      No articles yet. <%= link_to "Write the first one", new_admin_article_path, class: "binary-link" %>.
+    </p>
+  <% end %>
+</div>

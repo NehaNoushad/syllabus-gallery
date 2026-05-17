@@ -1,0 +1,30 @@
+<% content_for :title, @article.title %>
+
+<article class="binary-article-page">
+  <header class="binary-article-page-head">
+    <div class="binary-article-page-meta">
+      <span class="binary-article-pill"><%= @article.kind_label %></span>
+      <span class="binary-article-date">
+        <%= (@article.published_at || @article.created_at).strftime("%Y · %B %-d") %>
+      </span>
+      <% unless @article.published? %>
+        <span class="binary-article-draft">DRAFT</span>
+      <% end %>
+    </div>
+    <h1 class="binary-article-page-title"><%= @article.title %></h1>
+    <% if @article.excerpt.present? %>
+      <p class="binary-article-page-excerpt"><%= @article.excerpt %></p>
+    <% end %>
+  </header>
+
+  <div class="binary-article-page-body">
+    <%= simple_format @article.body %>
+  </div>
+
+  <footer class="binary-article-page-foot">
+    <%= link_to "← All writings", articles_path, class: "binary-link" %>
+    <% if Current.user&.admin? %>
+      <%= link_to "Edit this article", edit_admin_article_path(@article), class: "binary-link" %>
+    <% end %>
+  </footer>
+</article>

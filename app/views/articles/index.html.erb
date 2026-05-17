@@ -1,0 +1,48 @@
+<% content_for :title, "The Workshop" %>
+
+<section class="binary-hero">
+  <div class="binary-hero-left">
+    <p class="binary-eyebrow">The Workshop</p>
+    <h1 class="binary-display">Writings.</h1>
+    <p class="binary-lede">
+      Long-form notes, project write-ups, and guides — the stuff worth
+      reading more than once. Updated when there's something worth saying.
+    </p>
+    <%= link_to "← Back to dashboard", root_path, class: "backlink" %>
+  </div>
+  <div class="binary-hero-right">
+    <p class="binary-eyebrow">No newsletter</p>
+    <h1 class="binary-display">No SEO.<br>No padding.</h1>
+    <p class="binary-lede">
+      Pieces are kept in the order they were written, with the most recent
+      at the top. No infinite scroll, no popups, no email capture.
+    </p>
+  </div>
+</section>
+
+<% if @articles.any? %>
+  <section class="binary-articles-page">
+    <div class="binary-articles">
+      <% @articles.each do |article| %>
+        <%= link_to article_path(article), class: "binary-article-card" do %>
+          <div class="binary-article-pill"><%= article.kind_label %></div>
+          <h3 class="binary-article-title"><%= article.title %></h3>
+          <% if article.excerpt.present? %>
+            <p class="binary-article-excerpt"><%= article.excerpt %></p>
+          <% end %>
+          <div class="binary-article-foot">
+            <%= (article.published_at || article.created_at).strftime("%Y-%m-%d") %>
+            <span>Read →</span>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+<% else %>
+  <div class="binary-empty">No articles yet.</div>
+<% end %>
+
+<footer class="binary-foot">
+  <%= link_to "← Back to dashboard", root_path %>
+  <span><%= @articles.size %> piece<%= "s" unless @articles.size == 1 %></span>
+</footer>

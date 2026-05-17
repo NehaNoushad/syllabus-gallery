@@ -1,0 +1,64 @@
+<% if @article.errors.any? %>
+  <ul class="binary-errors">
+    <% @article.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: [:admin, @article], class: "binary-form", local: true do |f| %>
+
+  <div class="binary-field">
+    <label class="binary-label" for="article_title">Title</label>
+    <%= f.text_field :title, id: "article_title", required: true, autofocus: @article.new_record?, class: "binary-input", maxlength: 160 %>
+  </div>
+
+  <div class="binary-field">
+    <label class="binary-label" for="article_kind">Kind</label>
+    <%= f.select :kind,
+                 Article::KINDS.map { |k| [k.upcase, k] },
+                 { include_blank: false },
+                 class: "binary-input", id: "article_kind" %>
+    <span class="binary-hint">Shows as the pill label on the dashboard card (PROJECT, GUIDE, NOTE, ESSAY, READING).</span>
+  </div>
+
+  <div class="binary-field">
+    <label class="binary-label" for="article_slug">URL slug</label>
+    <%= f.text_field :slug, id: "article_slug", placeholder: "auto-generated from title if left blank", class: "binary-input", maxlength: 80 %>
+    <span class="binary-hint">Lowercase letters, digits and dashes only. URL becomes /articles/&lt;slug&gt;.</span>
+  </div>
+
+  <div class="binary-field">
+    <label class="binary-label" for="article_excerpt">Excerpt</label>
+    <%= f.text_area :excerpt, id: "article_excerpt", rows: 3, maxlength: 400, class: "binary-input binary-textarea-light" %>
+    <span class="binary-hint">A one- or two-sentence summary. Appears on the dashboard card under the title.</span>
+  </div>
+
+  <div class="binary-field">
+    <label class="binary-label" for="article_body">Body</label>
+    <%= f.text_area :body, id: "article_body", rows: 18, required: true, class: "binary-input binary-textarea-light" %>
+    <span class="binary-hint">Plain text. Double-line breaks become paragraphs. Single line breaks become &lt;br&gt;.</span>
+  </div>
+
+  <div class="binary-form-actions">
+    <%= f.submit (@article.new_record? ? "Save as draft" : "Save changes"), class: "binary-btn" %>
+
+    <% if @article.persisted? %>
+      <% if @article.published? %>
+        <%= button_to "Unpublish", unpublish_admin_article_path(@article), method: :patch, class: "binary-btn binary-btn-secondary" %>
+      <% else %>
+        <%= button_to "Publish", publish_admin_article_path(@article), method: :patch, class: "binary-btn" %>
+      <% end %>
+    <% end %>
+
+    <%= link_to "Cancel", admin_articles_path, class: "binary-link" %>
+
+    <% if @article.persisted? %>
+      <%= button_to "Delete",
+                    admin_article_path(@article),
+                    method: :delete,
+                    form: { style: "margin-left: auto;", data: { turbo_confirm: "Delete this article permanently?" } },
+                    class: "binary-link" %>
+    <% end %>
+  </div>
+<% end %>
