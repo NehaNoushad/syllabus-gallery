@@ -10,16 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_17_173628) do
-  create_table "announcements", force: :cascade do |t|
-    t.text "content"
-    t.datetime "created_at", null: false
-    t.string "title"
-    t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
-    t.index ["user_id"], name: "index_announcements_on_user_id"
-  end
-
+ActiveRecord::Schema[8.1].define(version: 2026_05_17_182605) do
   create_table "degree_plans", force: :cascade do |t|
     t.string "branch"
     t.datetime "created_at", null: false
@@ -28,6 +19,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_17_173628) do
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_degree_plans_on_user_id"
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
   create_table "plan_selections", force: :cascade do |t|
@@ -73,8 +73,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_17_173628) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
-  add_foreign_key "announcements", "users"
   add_foreign_key "degree_plans", "users"
+  add_foreign_key "notes", "users"
   add_foreign_key "plan_selections", "degree_plans"
   add_foreign_key "plan_selections", "subjects"
   add_foreign_key "sessions", "users"

@@ -1,4 +1,4 @@
-class Announcement < ApplicationRecord
+class Note < ApplicationRecord
   belongs_to :user
 
   validates :content, presence: true, length: { maximum: 1000 }

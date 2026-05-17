@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   resources :degree_plans, path: "plans"
-  resources :announcements, only: [:create, :destroy]
+  resources :notes, only: [:create, :destroy]
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

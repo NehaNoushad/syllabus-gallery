@@ -58,48 +58,48 @@
   </div>
 </section>
 
-<!-- ANNOUNCEMENTS — admin posts, everyone reads -->
-<section class="binary-cat-overview inverted" id="announcements">
+<!-- NOTES — admin posts (study tips, first-day guides, etc.); everyone reads -->
+<section class="binary-cat-overview inverted" id="notes">
   <div class="binary-cat-inner">
     <header class="binary-semester-head">
       <span class="binary-sem-num">02 /</span>
-      <h2 class="binary-sem-title">Announcements</h2>
-      <span class="binary-sem-credits"><%= @announcements.size %> note<%= "s" unless @announcements.size == 1 %></span>
+      <h2 class="binary-sem-title">Notes</h2>
+      <span class="binary-sem-credits"><%= @notes.size %> note<%= "s" unless @notes.size == 1 %></span>
     </header>
 
     <% if Current.user&.admin? %>
-      <%= form_with model: @new_announcement, class: "binary-announce-form" do |f| %>
+      <%= form_with model: @new_note, class: "binary-note-form" do |f| %>
         <%= f.text_field :title, placeholder: "Title (optional)", class: "binary-input", maxlength: 120 %>
-        <%= f.text_area  :content, placeholder: "What's new?", class: "binary-input binary-textarea", rows: 3, maxlength: 1000, required: true %>
-        <%= f.submit "Post announcement", class: "binary-btn binary-btn-inverted" %>
+        <%= f.text_area  :content, placeholder: "Write a note — first-day tips, study habits, anything worth reading…", class: "binary-input binary-textarea", rows: 3, maxlength: 1000, required: true %>
+        <%= f.submit "Post note", class: "binary-btn binary-btn-inverted" %>
       <% end %>
     <% end %>
 
-    <% if @announcements.any? %>
-      <ol class="binary-announce-list">
-        <% @announcements.each_with_index do |a, i| %>
+    <% if @notes.any? %>
+      <ol class="binary-note-list">
+        <% @notes.each_with_index do |n, i| %>
           <li>
             <span class="num"><%= format("%02d", i + 1) %></span>
             <div class="body">
               <div class="head">
-                <% if a.title.present? %><span class="title"><%= a.title %></span><% end %>
-                <span class="time"><%= a.created_at.strftime("%Y-%m-%d · %H:%M") %></span>
+                <% if n.title.present? %><span class="title"><%= n.title %></span><% end %>
+                <span class="time"><%= n.created_at.strftime("%Y-%m-%d · %H:%M") %></span>
               </div>
-              <div class="content"><%= simple_format(a.content) %></div>
+              <div class="content"><%= simple_format(n.content) %></div>
             </div>
             <% if Current.user&.admin? %>
               <%= button_to "Remove",
-                            announcement_path(a),
+                            note_path(n),
                             method: :delete,
-                            form: { data: { turbo_confirm: "Delete this announcement?" } },
-                            class: "binary-link binary-announce-remove" %>
+                            form: { data: { turbo_confirm: "Delete this note?" } },
+                            class: "binary-link binary-note-remove" %>
             <% end %>
           </li>
         <% end %>
       </ol>
     <% else %>
       <p class="binary-empty" style="border: 0; padding: 32px 0; text-align: left;">
-        No announcements yet.<% if Current.user&.admin? %> Post the first one above.<% end %>
+        No notes yet.<% if Current.user&.admin? %> Post the first one above.<% end %>
       </p>
     <% end %>
   </div>
