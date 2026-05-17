@@ -3,7 +3,5 @@ class PagesController < ApplicationController
 
   def home
     @programs = Program.all
-    @notes    = Note.latest.includes(:user).limit(20)
-    @new_note = Note.new if Current.user&.admin?
   end
 end
