@@ -78,12 +78,14 @@ Rails.application.configure do
   # Only use :id for inspections in production.
   config.active_record.attributes_for_inspect = [ :id ]
 
-  # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
-  #
-  # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  # Hosts allowed in production. Render serves us on *.onrender.com by default;
+  # adding additional custom domains later just means appending to this list
+  # (or setting RAILS_ALLOWED_HOSTS as a comma-separated env var on Render).
+  config.hosts << /.*\.onrender\.com/
+  if ENV["RAILS_ALLOWED_HOSTS"].present?
+    ENV["RAILS_ALLOWED_HOSTS"].split(",").each { |host| config.hosts << host.strip }
+  end
+
+  # Skip DNS rebinding protection for Render's health check endpoint.
+  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
