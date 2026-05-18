@@ -80,7 +80,6 @@
             <div class="binary-semester-inner">
               <header class="binary-semester-head">
                 <span class="binary-sem-num"><%= format("%02d", semester) %> /</span>
-                <h2 class="binary-sem-title">Semester <%= semester %></h2>
                 <span class="binary-sem-credits"><%= sem_total %> credits</span>
               </header>
 
@@ -92,18 +91,14 @@
                       <span class="binary-row-name">
                         <% if s.code.present? && !s.code.include?("XXX") %><span class="code"><%= s.code %></span><% end %><%= s.name %><% if s.elective_group.present? %> <span style="font-weight:300; opacity:0.6;">— <%= s.elective_group %></span><% end %>
                       </span>
-                      <span class="binary-row-meta">
-                        <%= s.category_label %>.
-                        <% if s.credits.positive? %>
-                          <%= s.credits %> <%= s.credits == 1 ? "credit" : "credits" %>.
-                        <% else %>
-                          Non-credit.
-                        <% end %>
-                      </span>
+                      <span class="binary-row-meta"><%= s.category_label %></span>
                     </div>
-                    <span class="binary-row-cr">
-                      <%= s.credits.zero? ? "—" : "#{s.credits} cr" %>
-                    </span>
+                    <div class="binary-row-right">
+                      <span class="binary-row-cr">
+                        <%= s.credits.zero? ? "—" : "#{s.credits} cr" %>
+                      </span>
+                      <span class="binary-row-sem">Sem <%= semester %></span>
+                    </div>
                   </li>
                 <% end %>
               </ol>

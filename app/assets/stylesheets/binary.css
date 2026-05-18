@@ -342,6 +342,7 @@ turbo-frame { display: block; }
 
 .binary-semester-head {
   display: flex; align-items: baseline; gap: 28px;
+  justify-content: space-between;
   margin-bottom: 28px;
   border-bottom: 1px solid var(--ink);
   padding-bottom: 14px;
@@ -398,6 +399,21 @@ turbo-frame { display: block; }
   letter-spacing: 0.02em;
   white-space: nowrap;
   text-align: right;
+}
+/* Right column stacks "4 cr" over "Sem N" on /subjects rows. */
+.binary-row-right {
+  display: flex; flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+.binary-row-sem {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  white-space: nowrap;
 }
 
 /* Inverted (alternating) */
