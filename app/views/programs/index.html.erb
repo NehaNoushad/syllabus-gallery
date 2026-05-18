@@ -7,13 +7,13 @@
     <p class="binary-lede">
       Pick a program to read its complete curriculum — every semester, every
       subject, every credit. Use the catalog within a program to search and
-      filter; create a plan to save your elective picks.
+      filter further.
     </p>
     <%= link_to "← Back to dashboard", root_path, class: "backlink" %>
   </div>
   <div class="binary-hero-right has-image"
        style="--bg: url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1600&q=80')">
-    <p class="binary-eyebrow"><%= @programs.size %> in directory</p>
+    <p class="binary-eyebrow"><%= Program.all.size %> in directory</p>
     <h1 class="binary-display">Read them<br>side by side.</h1>
     <p class="binary-lede">
       Compare structure, pacing, electives. Every program follows the same
@@ -23,38 +23,93 @@
   </div>
 </section>
 
-<!-- PROGRAMS GRID -->
-<section class="binary-grid">
-  <% @programs.each do |program| %>
-    <article class="binary-card">
-      <header class="binary-card-head">
-        <span class="binary-card-num"><%= program.short %></span>
-        <h2 class="binary-card-title"><%= program.title %></h2>
-        <span class="binary-card-credits"><%= program.scheme %></span>
-      </header>
+<%= turbo_frame_tag "directory" do %>
+  <section class="binary-filter">
+    <%= form_with url: programs_path, method: :get do |f| %>
+      <div class="binary-filter-row">
+        <div>
+          <label class="binary-search-label" for="programs-q">Search syllabuses</label>
+          <%= f.text_field :q,
+                           id: "programs-q",
+                           value: @query,
+                           placeholder: "By name, code, scheme — e.g. ECE, 2024, machine learning",
+                           autocomplete: "off",
+                           class: "binary-search",
+                           data: { turbo_permanent: true },
+                           oninput: "clearTimeout(window._pst); window._pst = setTimeout(()=>this.form.requestSubmit(), 250);" %>
+        </div>
+        <div class="binary-results">
+          <%= @programs.size %> <%= @programs.size == 1 ? "match" : "matches" %>
+        </div>
+      </div>
+    <% end %>
+  </section>
 
-      <p class="binary-card-tagline"><%= program.tagline %></p>
+  <% if @programs.any? %>
+    <section class="binary-grid">
+      <% @programs.each do |program| %>
+        <article class="binary-card">
+          <header class="binary-card-head">
+            <span class="binary-card-num"><%= program.short %></span>
+            <h2 class="binary-card-title"><%= program.title %></h2>
+            <span class="binary-card-credits"><%= program.scheme %></span>
+          </header>
 
-      <p class="binary-card-meta">
-        <%= program.total_semesters %> sem · <%= program.total_credits %> cr · <%= program.total_electives_count %> electives · <%= program.branch_code %>
-      </p>
+          <p class="binary-card-tagline"><%= program.tagline %></p>
 
-      <%= link_to "Read curriculum →", program_path(program.slug), class: "binary-btn" %>
-    </article>
+          <p class="binary-card-meta">
+            <%= program.total_semesters %> sem · <%= program.total_credits %> cr · <%= program.branch_code %>
+          </p>
+
+          <%= link_to "Read curriculum →", program_path(program.slug), class: "binary-btn" %>
+        </article>
+      <% end %>
+
+      <% if @programs.size.odd? && @query.blank? %>
+        <article class="binary-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+          <p class="binary-eyebrow" style="margin-bottom: 8px;">More coming</p>
+          <h2 class="binary-card-title" style="margin-bottom: 8px;">A second syllabus.</h2>
+          <p class="binary-hint" style="max-width: 30ch;">
+            Another program will land here as soon as its syllabus data is in.
+          </p>
+        </article>
+      <% end %>
+    </section>
+  <% else %>
+    <div class="binary-empty">
+      No syllabuses match "<%= @query %>".
+      <%= link_to "Clear search", programs_path, class: "binary-link", style: "margin-left: 12px;" %>
+    </div>
   <% end %>
 
-  <% if @programs.size.odd? %>
-    <article class="binary-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-      <p class="binary-eyebrow" style="margin-bottom: 8px;">More coming</p>
-      <h2 class="binary-card-title" style="margin-bottom: 8px;">A second syllabus.</h2>
-      <p class="binary-hint" style="max-width: 30ch;">
-        Another program will land here as soon as its syllabus data is in.
-      </p>
-    </article>
-  <% end %>
-</section>
+  <footer class="binary-foot">
+    <%= link_to "← Back to dashboard", root_path %>
+    <span>End of directory</span>
+  </footer>
+<% end %>
 
-<footer class="binary-foot">
-  <%= link_to "← Back to dashboard", root_path %>
-  <span>End of directory</span>
-</footer>
+<script>
+  // Same scroll/URL pattern as /subjects: snapshot scroll before each
+  // directory frame fetch, restore after; replaceState so the search
+  // string is shareable in the URL bar without scrolling.
+  (function () {
+    var pendingScrollY = null;
+    document.addEventListener("turbo:before-fetch-request", function (event) {
+      if (event.target && event.target.id === "directory") {
+        pendingScrollY = window.scrollY;
+      }
+    });
+    document.addEventListener("turbo:frame-load", function (event) {
+      var frame = event.target;
+      if (frame.id !== "directory") return;
+      if (pendingScrollY !== null) {
+        window.scrollTo(0, pendingScrollY);
+        pendingScrollY = null;
+      }
+      if (frame.src) {
+        var u = new URL(frame.src, window.location.origin);
+        window.history.replaceState(null, "", u.pathname + u.search);
+      }
+    });
+  })();
+</script>
