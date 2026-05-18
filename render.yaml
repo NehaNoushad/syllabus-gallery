@@ -13,7 +13,7 @@ services:
     region: singapore
     buildCommand: |
       bundle install
-      ./bin/rails assets:precompile
+      SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
       ./bin/rails db:prepare
       ./bin/rails db:seed
     startCommand: bundle exec rails server -p $PORT -b 0.0.0.0

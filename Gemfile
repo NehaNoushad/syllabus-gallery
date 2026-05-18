@@ -14,8 +14,11 @@ gem "importmap-rails"
 gem "turbo-rails"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
-# Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
-gem "tailwindcss-rails"
+# Tailwind was scaffolded by `rails new --css=tailwind` but never used —
+# the binary theme is hand-written CSS in app/assets/stylesheets/binary.css.
+# Keeping it caused assets:precompile to fail on Render because the
+# `tailwindcss:build` task expects a source file we don't ship.
+# gem "tailwindcss-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
