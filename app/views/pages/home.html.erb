@@ -23,47 +23,12 @@
   </div>
 </section>
 
-<!-- HOW IT WORKS — credibility-strip style -->
-<section class="binary-credline">
-  <span>1 — Pick a program</span>
-  <span>2 — Read the curriculum</span>
-  <span>3 — Save your elective plan</span>
-</section>
-
-<!-- AVAILABLE PROGRAMS preview -->
-<section class="binary-cat-overview">
-  <div class="binary-cat-inner">
-    <header class="binary-semester-head">
-      <span class="binary-sem-num">01 /</span>
-      <h2 class="binary-sem-title">Available syllabuses</h2>
-      <span class="binary-sem-credits"><%= @programs.size %> in directory</span>
-    </header>
-
-    <ol class="binary-plans-list" style="margin: 0;">
-      <% @programs.each_with_index do |program, i| %>
-        <li>
-          <span class="num"><%= format("%02d", i + 1) %></span>
-          <%= link_to program.title, program_path(program.slug), class: "name" %>
-          <span class="meta">
-            <%= program.scheme %> Scheme · <%= program.total_credits %> cr · <%= program.total_semesters %> semesters
-          </span>
-        </li>
-      <% end %>
-    </ol>
-
-    <p class="binary-hint" style="margin-top: 24px;">
-      More programs will appear here as their syllabus data is added.
-      <%= link_to "Open the full directory →", programs_path, class: "binary-link", style: "margin-left: 8px;" %>
-    </p>
-  </div>
-</section>
-
 <!-- THE WORKSHOP — long-form writings from the admin -->
 <% if @articles.any? %>
   <section class="binary-cat-overview" id="workshop">
     <div class="binary-cat-inner">
       <header class="binary-semester-head">
-        <span class="binary-sem-num">02 /</span>
+        <span class="binary-sem-num">01 /</span>
         <h2 class="binary-sem-title">The Workshop</h2>
         <span class="binary-sem-credits"><%= @articles.size %> piece<%= "s" unless @articles.size == 1 %></span>
       </header>
@@ -93,5 +58,5 @@
 
 <footer class="binary-foot">
   <span>End of dashboard</span>
-  <span><%= @programs.size %> program<%= "s" unless @programs.size == 1 %> available</span>
+  <span><%= link_to "Browse the directory →", programs_path %></span>
 </footer>
