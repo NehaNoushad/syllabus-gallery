@@ -72,39 +72,29 @@
     <% if @subjects_by_semester.empty? %>
       <div class="binary-empty">No subjects match those filters.</div>
     <% else %>
-      <div class="binary-semesters">
-        <% @subjects_by_semester.each do |semester, subjects| %>
-          <% sem_total = subjects.sum(&:credits) %>
-          <% inverted = semester.to_i.even? ? "inverted" : "" %>
-          <article class="binary-semester <%= inverted %>">
-            <div class="binary-semester-inner">
-              <header class="binary-semester-head">
-                <span class="binary-sem-num"><%= format("%02d", semester) %> /</span>
-                <span class="binary-sem-credits"><%= sem_total %> credits</span>
-              </header>
-
-              <ol class="binary-subjects">
-                <% subjects.each_with_index do |s, i| %>
-                  <li>
-                    <span class="binary-row-num"><%= format("%02d", i + 1) %></span>
-                    <div class="binary-row-body">
-                      <span class="binary-row-name">
-                        <% if s.code.present? && !s.code.include?("XXX") %><span class="code"><%= s.code %></span><% end %><%= s.name %><% if s.elective_group.present? %> <span style="font-weight:300; opacity:0.6;">— <%= s.elective_group %></span><% end %>
-                      </span>
-                      <span class="binary-row-meta"><%= s.category_label %></span>
-                    </div>
-                    <div class="binary-row-right">
-                      <span class="binary-row-cr">
-                        <%= s.credits.zero? ? "—" : "#{s.credits} cr" %>
-                      </span>
-                      <span class="binary-row-sem">Sem <%= semester %></span>
-                    </div>
-                  </li>
-                <% end %>
-              </ol>
-            </div>
-          </article>
-        <% end %>
+      <article class="binary-semester">
+        <div class="binary-semester-inner">
+          <ol class="binary-subjects">
+            <% @subjects.each_with_index do |s, i| %>
+              <li>
+                <span class="binary-row-num"><%= format("%02d", i + 1) %></span>
+                <div class="binary-row-body">
+                  <span class="binary-row-name">
+                    <% if s.code.present? && !s.code.include?("XXX") %><span class="code"><%= s.code %></span><% end %><%= s.name %><% if s.elective_group.present? %> <span style="font-weight:300; opacity:0.6;">— <%= s.elective_group %></span><% end %>
+                  </span>
+                  <span class="binary-row-meta"><%= s.category_label %></span>
+                </div>
+                <div class="binary-row-right">
+                  <span class="binary-row-cr">
+                    <%= s.credits.zero? ? "—" : "#{s.credits} cr" %>
+                  </span>
+                  <span class="binary-row-sem">Sem <%= s.semester %></span>
+                </div>
+              </li>
+            <% end %>
+          </ol>
+        </div>
+      </article>
       </div>
     <% end %>
 
