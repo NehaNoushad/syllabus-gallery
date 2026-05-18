@@ -934,33 +934,6 @@ turbo-frame { display: block; }
   font-weight: 500;
 }
 
-/* Elective selects on /plans/:id/edit */
-.binary-elective-select {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  padding: 4px 6px;
-  background: transparent;
-  color: inherit;
-  border: 0;
-  border-bottom: 1px solid currentColor;
-  border-radius: 0;
-  outline: none;
-}
-.binary-elective-select option { color: var(--ink); }
-
-/* Plan row variations (chosen elective vs unchosen) */
-.binary-pick { display: flex; gap: 8px; align-items: baseline; }
-.binary-pick .slot {
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 11px;
-  letter-spacing: 0.14em;
-}
-.binary-pick .chosen { font-weight: 500; }
-.binary-pick .unchosen { font-weight: 300; opacity: 0.55; font-style: normal; }
 
 /* ===================================================================
    MOBILE — phones ≤600px. Mobile-first rework: single-column reading,

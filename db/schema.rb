@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_17_195737) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_18_062703) do
   create_table "articles", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -24,27 +24,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_17_195737) do
     t.index ["published_at"], name: "index_articles_on_published_at"
     t.index ["slug"], name: "index_articles_on_slug", unique: true
     t.index ["user_id"], name: "index_articles_on_user_id"
-  end
-
-  create_table "degree_plans", force: :cascade do |t|
-    t.string "branch"
-    t.datetime "created_at", null: false
-    t.string "scheme"
-    t.string "title"
-    t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
-    t.index ["user_id"], name: "index_degree_plans_on_user_id"
-  end
-
-  create_table "plan_selections", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.integer "degree_plan_id", null: false
-    t.string "elective_group", null: false
-    t.integer "subject_id", null: false
-    t.datetime "updated_at", null: false
-    t.index ["degree_plan_id", "elective_group"], name: "index_plan_selections_on_degree_plan_id_and_elective_group", unique: true
-    t.index ["degree_plan_id"], name: "index_plan_selections_on_degree_plan_id"
-    t.index ["subject_id"], name: "index_plan_selections_on_subject_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -80,8 +59,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_17_195737) do
   end
 
   add_foreign_key "articles", "users"
-  add_foreign_key "degree_plans", "users"
-  add_foreign_key "plan_selections", "degree_plans"
-  add_foreign_key "plan_selections", "subjects"
   add_foreign_key "sessions", "users"
 end

@@ -21,19 +21,6 @@ module BreadcrumbsHelper
        Crumb.new(@program.title, program_path(@program.slug)),
        Crumb.new("Subjects", nil)]
 
-    when "degree_plans#index"
-      [Crumb.new("Plans", nil)]
-    when "degree_plans#new", "degree_plans#create"
-      [Crumb.new("Plans", degree_plans_path),
-       Crumb.new("New plan", nil)]
-    when "degree_plans#show"
-      [Crumb.new("Plans", degree_plans_path),
-       Crumb.new(@plan.title, nil)]
-    when "degree_plans#edit", "degree_plans#update"
-      [Crumb.new("Plans", degree_plans_path),
-       Crumb.new(@plan.title, @plan),
-       Crumb.new("Edit", nil)]
-
     when "articles#index"
       [Crumb.new("Workshop", nil)]
     when "articles#show"

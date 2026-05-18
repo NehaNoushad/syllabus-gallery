@@ -1,7 +1,5 @@
 class Subject < ApplicationRecord
-  validates :name, :credits, :category, :branch, :scheme, presence: true
-  # semester is required for everything except elective_option rows (the pool of choices).
-  validates :semester, presence: true, unless: -> { kind == "elective_option" }
+  validates :name, :credits, :category, :semester, :branch, :scheme, presence: true
 
   CATEGORY_LABELS = {
     "math" => "Mathematics",

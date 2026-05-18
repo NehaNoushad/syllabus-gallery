@@ -42,23 +42,25 @@
 
   <div class="binary-form-actions">
     <%= f.submit (@article.new_record? ? "Save as draft" : "Save changes"), class: "binary-btn" %>
-
-    <% if @article.persisted? %>
-      <% if @article.published? %>
-        <%= button_to "Unpublish", unpublish_admin_article_path(@article), method: :patch, class: "binary-btn binary-btn-secondary" %>
-      <% else %>
-        <%= button_to "Publish", publish_admin_article_path(@article), method: :patch, class: "binary-btn" %>
-      <% end %>
-    <% end %>
-
     <%= link_to "Cancel", admin_articles_path, class: "binary-link" %>
+  </div>
+<% end %>
 
-    <% if @article.persisted? %>
-      <%= button_to "Delete",
-                    admin_article_path(@article),
-                    method: :delete,
-                    form: { style: "margin-left: auto;", data: { turbo_confirm: "Delete this article permanently?" } },
-                    class: "binary-link" %>
+<%# Publish / Unpublish / Delete must live OUTSIDE the main form_with above.
+    Each button_to renders its own <form>, and nested forms are invalid
+    HTML — the browser would submit the outer (save) form instead. %>
+<% if @article.persisted? %>
+  <div class="binary-form-actions" style="margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--ink);">
+    <% if @article.published? %>
+      <%= button_to "Unpublish", unpublish_admin_article_path(@article), method: :patch, class: "binary-btn binary-btn-secondary" %>
+    <% else %>
+      <%= button_to "Publish", publish_admin_article_path(@article), method: :patch, class: "binary-btn" %>
     <% end %>
+
+    <%= button_to "Delete article",
+                  admin_article_path(@article),
+                  method: :delete,
+                  form: { style: "margin-left: auto;", data: { turbo_confirm: "Delete this article permanently?" } },
+                  class: "binary-link" %>
   </div>
 <% end %>

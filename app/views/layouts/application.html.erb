@@ -34,7 +34,6 @@
       <%= link_to "Syllabuses", programs_path %>
       <%= link_to "Workshop", articles_path %>
       <% if Current.user %>
-        <%= link_to "Plans", degree_plans_path %>
         <% if Current.user.admin? %>
           <%= link_to "Admin", admin_articles_path %>
         <% end %>
