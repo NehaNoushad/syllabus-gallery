@@ -290,6 +290,20 @@ turbo-frame { display: block; }
 .binary-search::placeholder { color: var(--ink); opacity: 0.35; font-weight: 300; }
 .binary-search:focus { border-bottom-width: 2px; }
 
+/* Inverted filter strip — black background, white ink. */
+.binary-filter.inverted {
+  background: var(--ink);
+  color: var(--paper);
+}
+.binary-filter.inverted .binary-search {
+  color: var(--paper);
+  border-bottom-color: var(--paper);
+}
+.binary-filter.inverted .binary-search::placeholder {
+  color: var(--paper);
+  opacity: 0.4;
+}
+
 .binary-results {
   font-family: "Space Grotesk", sans-serif;
   font-size: 11px;

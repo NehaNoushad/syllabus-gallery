@@ -23,7 +23,7 @@
   </div>
 </section>
 
-<section class="binary-filter">
+<section class="binary-filter inverted">
   <%= form_with url: programs_path, method: :get, data: { turbo_frame: "_top" } do |f| %>
     <div class="binary-filter-row">
       <div>
@@ -39,7 +39,7 @@
         <%= @programs.size %> <%= @programs.size == 1 ? "match" : "matches" %>
       </div>
     </div>
-    <p class="binary-hint" style="margin-top: 10px;">Press Enter to search.</p>
+    <p class="binary-hint" style="margin-top: 10px; opacity: 0.6;">Press Enter to search.</p>
   <% end %>
 </section>
 
