@@ -23,7 +23,7 @@
   </div>
 </section>
 
-<section class="binary-filter inverted">
+<section class="binary-filter">
   <%= form_with url: programs_path, method: :get, data: { turbo_frame: "_top" } do |f| %>
     <div class="binary-filter-row">
       <div>
@@ -33,13 +33,13 @@
                          value: @query,
                          placeholder: "By name, code, scheme — e.g. ECE, 2024, machine learning",
                          autocomplete: "off",
-                         class: "binary-search" %>
+                         class: "binary-search binary-search-filled" %>
       </div>
       <div class="binary-results">
         <%= @programs.size %> <%= @programs.size == 1 ? "match" : "matches" %>
       </div>
     </div>
-    <p class="binary-hint" style="margin-top: 10px; opacity: 0.6;">Press Enter to search.</p>
+    <p class="binary-hint" style="margin-top: 10px;">Press Enter to search.</p>
   <% end %>
 </section>
 

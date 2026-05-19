@@ -290,18 +290,23 @@ turbo-frame { display: block; }
 .binary-search::placeholder { color: var(--ink); opacity: 0.35; font-weight: 300; }
 .binary-search:focus { border-bottom-width: 2px; }
 
-/* Inverted filter strip — black background, white ink. */
-.binary-filter.inverted {
+/* Filled-rectangle variant of the search input — black box with white
+   ink, used on /programs so the search field reads as a solid object
+   rather than a ruled line. */
+.binary-search.binary-search-filled {
   background: var(--ink);
   color: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 14px 18px;
 }
-.binary-filter.inverted .binary-search {
+.binary-search.binary-search-filled::placeholder {
   color: var(--paper);
-  border-bottom-color: var(--paper);
+  opacity: 0.45;
 }
-.binary-filter.inverted .binary-search::placeholder {
-  color: var(--paper);
-  opacity: 0.4;
+.binary-search.binary-search-filled:focus {
+  border-width: 1px;
+  outline: 2px solid var(--ink);
+  outline-offset: -1px;
 }
 
 .binary-results {
